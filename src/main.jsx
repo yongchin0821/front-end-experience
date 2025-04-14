@@ -9,27 +9,49 @@ import "./index.css";
 //   </StrictMode>,
 // )
 
-import { StrictMode, Suspense } from "react";
-import { createRoot } from "react-dom/client";
-import { BrowserRouter, useRoutes } from "react-router-dom";
+// import { StrictMode, Suspense } from "react";
+// import { createRoot } from "react-dom/client";
+// import { BrowserRouter, useRoutes } from "react-router-dom";
 
-import routes from "~react-pages";
+// import routes from "~react-pages";
 
-function App() {
-  return (
-    <Suspense fallback={<p>Loading...</p>}>
-      {useRoutes(routes)}
-    </Suspense>
-    // <> {useRoutes(routes)}</>
-  );
-}
+// function App() {
+//   return (
+//     <Suspense fallback={<p>Loading...</p>}>
+//       {useRoutes(routes)}
+//     </Suspense>
+//     // <> {useRoutes(routes)}</>
+//   );
+// }
 
-const app = createRoot(document.getElementById("root"));
+// const app = createRoot(document.getElementById("root"));
 
-app.render(
-  <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </StrictMode>
-);
+// app.render(
+//   <StrictMode>
+//     <BrowserRouter>
+//       <App />
+//     </BrowserRouter>
+//   </StrictMode>
+// );
+
+import { createBrowserRouter, RouterProvider } from "react-router";
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+import Home from "./pages/index";
+import Slideshow from "./pages/SlideShow/index";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    Component: Home,
+  },
+  {
+    path: "/slideshow",
+    Component: Slideshow,
+  },
+]);
+
+const root = document.getElementById("root");
+
+ReactDOM.createRoot(root).render(<RouterProvider router={router} />);

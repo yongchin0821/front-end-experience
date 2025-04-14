@@ -11,11 +11,11 @@ import { useAtom } from "jotai";
 import { useControls } from "leva";
 import { useEffect, useRef } from "react";
 import { slideAtom } from "./Overlay";
-import Scene from "./Scene";
+import { Scene } from "./Scene";
 
 export const scenes = [
   {
-    path: "./models/cybertruck_scene.glb",
+    path: "models/cybertruck_scene.glb",
     mainColor: "#f9c0ff",
     name: "Cybertruck",
     description:
@@ -24,7 +24,7 @@ export const scenes = [
     range: 660,
   },
   {
-    path: "./models/model3_scene.glb",
+    path: "models/model3_scene.glb",
     mainColor: "#c0ffe1",
     name: "Model 3",
     description: "The car of the future",
@@ -32,7 +32,7 @@ export const scenes = [
     range: 576,
   },
   {
-    path: "./models/semi_scene.glb",
+    path: "models/semi_scene.glb",
     mainColor: "#ffdec0",
     name: "Semi",
     description: "The Future of Trucking",
@@ -108,7 +108,6 @@ const CameraHandler = ({ slideDistance }) => {
     moveToSlide();
     lastSlide.current = slide;
   }, [slide]);
-
   return (
     <CameraControls
       ref={cameraControls}
@@ -138,7 +137,7 @@ export const Experience = () => {
   return (
     <>
       <ambientLight intensity={0.2} />
-      {/* <Environment preset={"city"} /> */}
+      <Environment preset={"city"} />
       <CameraHandler slideDistance={slideDistance} />
       {/* MAIN WORLD */}
       <group>
@@ -183,10 +182,6 @@ export const Experience = () => {
           <planeGeometry args={[viewport.width, viewport.height]} />
           <meshBasicMaterial toneMapped={false}>
             <RenderTexture attach="map">
-              {/* <mesh position-y={-1.5}>
-                <meshBasicMaterial color={"white"} />
-                <boxGeometry />
-              </mesh> */}
               <Scene {...scene} />
             </RenderTexture>
           </meshBasicMaterial>

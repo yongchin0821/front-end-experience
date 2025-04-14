@@ -1,13 +1,58 @@
-# React + Vite
+我在使用 react three fiber + vite-plugin-pages 时，console 出现了`THREE.WebGLRenderer: Context Lost`报错，如何解决
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# object
 
-Currently, two official plugins are available:
+1. 阅读我的代码
+2. 分析出问题的原因，给出解决办法
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# code
 
-## Expanding the ESLint configuration
+```main.jsx
+import { StrictMode, Suspense } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter, useRoutes } from "react-router-dom";
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
+import routes from "~react-pages";
+
+function App() {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      {useRoutes(routes)}
+    </Suspense>
+    // <> {useRoutes(routes)}</>
+  );
+}
+
+const app = createRoot(document.getElementById("root"));
+
+app.render(
+  <StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </StrictMode>
+);
+```
+
+```src/pages/SlideShow/index.jsx
+import { Canvas } from "@react-three/fiber";
+import { Leva } from "leva";
+import { Experience } from "./components/Experience";
+import { Overlay } from "./components/Overlay";
+import './index.css'
+
+function App2() {
+  return (
+    <>
+      <Leva hidden />
+      <Overlay />
+      <Canvas shadows camera={{ position: [0, 0, 5], fov: 30 }}>
+        <color attach="background" args={["#ececec"]} />
+        <Experience />
+      </Canvas>
+    </>
+  );
+}
+
+export default App2;
+```

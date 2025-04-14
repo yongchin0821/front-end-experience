@@ -1,6 +1,6 @@
 // import { StrictMode } from 'react'
 // import { createRoot } from 'react-dom/client'
-import "./index.css";
+// import "./index.css";
 // import App from './App.jsx'
 
 // createRoot(document.getElementById('root')).render(
@@ -40,7 +40,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import Home from "./pages/index";
 import Slideshow from "./pages/SlideShow/index";
-
+import Prod from "./pages/prod/index";
+import "./index.css";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
   {
     path: "/slideshow",
     Component: Slideshow,
+  },
+  {
+    path: "/prod",
+    Component: Prod,
   },
 ]);
 

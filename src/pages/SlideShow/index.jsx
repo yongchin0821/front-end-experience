@@ -4,7 +4,7 @@ import { Experience } from "./components/Experience";
 import { Overlay } from "./components/Overlay";
 import './index.css'
 
-function App2() {
+function App() {
   return (
     <>
       <Leva hidden />
@@ -17,4 +17,4 @@ function App2() {
   );
 }
 
-export default App2;
+export default App;

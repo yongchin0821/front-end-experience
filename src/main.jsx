@@ -41,6 +41,7 @@ import ReactDOM from "react-dom/client";
 import Home from "./pages/index";
 import Slideshow from "./pages/SlideShow/index";
 import Prod from "./pages/prod/index";
+import Dissolve from "./pages/shaders/dissolve/index";
 import "./index.css";
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: "/prod",
     Component: Prod,
+  },
+  {
+    path: "/shaders/dissolve",
+    Component: Dissolve,
   },
 ]);
 

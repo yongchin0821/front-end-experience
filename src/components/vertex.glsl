@@ -4,7 +4,6 @@ uniform vec3 uMouse;
 uniform float uAmp;
 attribute vec3 pos;
 varying vec2 vUv;
-// float PI = 3.141592653589793238;
 
 #include ./noise.glsl
 
@@ -38,8 +37,6 @@ vec3 getOffset(vec3 p) {
 
 void main() {
     vUv = position.xy + vec2(0.5);
-    vec3 finalpos = pos + position * 0.1;
-
     float particle_size = cnoise(pos * 5.) * 0.5 + 0.5;
 
     vec3 world_pos = rotation3dY(time * 0.5 * (0.1 + 0.5 * particle_size)) * pos;

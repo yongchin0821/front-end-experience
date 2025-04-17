@@ -16,9 +16,6 @@ export const Galaxy = ({ min_radius = 0.5, max_radius = 1, ...props }) => {
   const geo = useRef();
   const shaderRef = useRef();
 
-  // let min_radius = 0.5;
-  // let max_radius = 1;
-
   const genpos = (geo, particlegeo) => {
     geo.current.setAttribute(
       "position",
@@ -57,8 +54,6 @@ export const Galaxy = ({ min_radius = 0.5, max_radius = 1, ...props }) => {
 
   return (
     <>
-      {/* MAIN WORLD */}
-
       <mesh>
         <instancedBufferGeometry ref={geo} instanceCount={count}>
           <planeGeometry ref={particlegeo} args={[1, 1, 1, 1]}></planeGeometry>

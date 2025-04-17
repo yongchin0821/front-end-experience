@@ -8,15 +8,15 @@ import "./index.css";
 function App() {
   return (
     <Canvas
-      shadows
+      
       camera={{ position: [0, 2, 2], fov: 75, near: 0.1, far: 200 }}
     >
       <color attach="background" args={["#000000"]} />
       <OrbitControls />
       <Experience />
-      <EffectComposer>
+      {/* <EffectComposer>
         <Bloom luminanceThreshold={1} intensity={1.25} mipmapBlur />
-      </EffectComposer>
+      </EffectComposer> */}
     </Canvas>
   );
 }

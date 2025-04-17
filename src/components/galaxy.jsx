@@ -1,4 +1,4 @@
-import { useThree, useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { useEffect, useRef } from "react";
 import testFragmentShader from "./fragment.glsl";
@@ -10,7 +10,7 @@ const lerp = (a, b, t) => {
 };
 
 export const Galaxy = ({ min_radius = 0.5, max_radius = 1, ...props }) => {
-  const count = 10000;
+  const count = props.count;
   const pos = new Float32Array(count * 3);
   const particlegeo = useRef();
   const geo = useRef();
@@ -45,7 +45,10 @@ export const Galaxy = ({ min_radius = 0.5, max_radius = 1, ...props }) => {
   };
 
   useFrame((_state, delta) => {
+    //   console.log(props);
+    // _state.gl.render(_state.scene, _state.camera);
     shaderRef.current.uniforms.time.value += delta;
+    shaderRef.current.uniforms.uMouse.value = props.point;
   });
 
   useEffect(() => {
@@ -72,6 +75,8 @@ export const Galaxy = ({ min_radius = 0.5, max_radius = 1, ...props }) => {
             },
             uColor: { value: new THREE.Color(props.color) },
             uSize: { value: props.size },
+            uMouse: { value: new THREE.Vector3() },
+            uAmp: { value: props.amp }, //扭曲幅度
             time: { value: 0 },
             resolution: { value: new THREE.Vector4() },
           }}

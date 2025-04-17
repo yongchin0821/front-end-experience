@@ -1,8 +1,7 @@
 uniform float time;
-
-// varying vec2 vUv;
-// attribute vec3 pos;
-
+uniform float uSize;
+attribute vec3 pos;
+varying vec2 vUv;
 // float PI = 3.141592653589793238;
 
 #include ./noise.glsl
@@ -28,8 +27,12 @@ uniform float time;
 // }
 
 //mesh
-attribute vec3 pos;
-varying vec2 vUv;
+vec3 getOffset(vec3 p) {
+    float twist_scale = cnoise(pos) * 0.5 + 0.5;
+    vec3 temppos = rotation3dY(time * (0.5 + 0.5 * twist_scale) + length(pos.xz)) * p;
+    vec3 offset = fbm_vec3(temppos, 0.5, 0.);
+    return offset * 0.2;
+}
 
 void main() {
     vUv = position.xy + vec2(0.5);
@@ -39,13 +42,14 @@ void main() {
 
     vec3 world_pos = rotation3dY(time * 0.5 * (0.1 + 0.5 * particle_size)) * pos;
 
-    vec3 offset = fbm_vec3(world_pos, 0., 0.);
+    vec3 offset0 = getOffset(world_pos);
+    vec3 offset = fbm_vec3(world_pos + offset0, 0., 0.);
 
     vec3 particle_position = (modelMatrix * vec4(world_pos + offset, 1.)).xyz;
 
     vec4 viewPosition = viewMatrix * vec4(particle_position, 1.);
 
-    viewPosition.xyz += position * (0.01 + 0.1 * particle_size);
+    viewPosition.xyz += position * uSize * (0.01 + 0.1 * particle_size);
 
     vec4 projectionPosition = projectionMatrix * viewPosition;
 

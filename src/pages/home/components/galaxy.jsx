@@ -1,8 +1,8 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { useEffect, useRef } from "react";
-import testFragmentShader from "./fragment.glsl";
-import testVertexShader from "./vertex.glsl";
+import testFragmentShader from "../shaders/fragment.glsl";
+import testVertexShader from "../shaders/vertex.glsl";
 import particleTexture from "./particle.jpg";
 
 const lerp = (a, b, t) => {

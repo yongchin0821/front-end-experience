@@ -1,7 +1,8 @@
 .doc {
   height: 100vh;
   width: 100vw;
-  position: absolute !important;
+  /* position: absolute ; */
+  background-color: black;
 }
 /* 
 body {
@@ -11,7 +12,3 @@ body {
 #left p {
   margin-bottom: 24px;
 }
-
-/* p{
-  margin-bottom: 6px;
-} */

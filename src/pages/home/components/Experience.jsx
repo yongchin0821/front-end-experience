@@ -145,8 +145,7 @@ export const Experience = () => {
     <>
       {/* MAIN WORLD */}
 
-      {/* <Content /> */}
-      {/* <Sparkles
+      <Sparkles
         scale={6}
         speed={0.5}
         size={2}
@@ -162,7 +161,7 @@ export const Experience = () => {
         saturation={0}
         fade
         speed={2}
-      /> */}
+      />
 
       <group scale={2.5} rotation={[1, 0, 0.3]} position={[1.5, 1.5, 0]}>
         <mesh

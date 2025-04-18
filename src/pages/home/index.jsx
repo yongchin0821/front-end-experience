@@ -1,10 +1,8 @@
 import { Canvas } from "@react-three/fiber";
 import { ContactShadows, Environment, OrbitControls } from "@react-three/drei";
-
-import { Bloom, EffectComposer } from "@react-three/postprocessing";
-import { Experience } from "../components/Experience";
+import { Experience } from "./components/Experience";
 import "./index.css";
-import { Content } from "../components/Content";
+import { Content } from "./components/Content";
 
 function App() {
   return (
@@ -13,7 +11,7 @@ function App() {
         className="webgl"
         camera={{ position: [0, 0, 5], fov: 75, near: 0.01, far: 200 }}
       >
-        <color attach="background" args={["#000000"]} />
+        {/* <color attach="background" args={["#000000"]} /> */}
         <OrbitControls />
         <Experience />
       </Canvas>

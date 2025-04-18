@@ -38,7 +38,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Home from "./pages/index";
+import Home from "./pages/home/index";
 import Slideshow from "./pages/SlideShow/index";
 import Prod from "./pages/prod/index";
 import Dissolve from "./pages/shaders/dissolve/index";

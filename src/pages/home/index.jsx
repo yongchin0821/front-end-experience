@@ -9,7 +9,7 @@ function App() {
     <>
       <Canvas
         className="webgl"
-        camera={{ position: [0, 0, 5], fov: 75, near: 0.01, far: 200 }}
+        camera={{ position: [0, 0, 5], fov: 75, near: 1, far: 500 }}
       >
         {/* <color attach="background" args={["#000000"]} /> */}
         <OrbitControls />

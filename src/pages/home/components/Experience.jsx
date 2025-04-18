@@ -6,7 +6,6 @@ import {
   MeshDistortMaterial,
   RenderTexture,
   Stars,
-  Text,
   Sparkles,
 } from "@react-three/drei";
 import { useThree, useFrame } from "@react-three/fiber";
@@ -14,7 +13,6 @@ import { useControls } from "leva";
 import * as THREE from "three";
 import { useEffect, useRef } from "react";
 import { Galaxy } from "./Galaxy";
-import { Content } from "./Content";
 
 // const galaxies = [
 //   {
@@ -145,22 +143,22 @@ export const Experience = () => {
     <>
       {/* MAIN WORLD */}
 
-      <Sparkles
+      {/* <Sparkles
         scale={6}
         speed={0.5}
         size={2}
         count={100}
         opacity={0.3}
-      ></Sparkles>
+      ></Sparkles> */}
 
       <Stars
         radius={100}
         depth={50}
-        count={500}
+        count={5000}
         factor={4}
         saturation={0}
         fade
-        speed={2}
+        speed={1}
       />
 
       <group scale={2.5} rotation={[1, 0, 0.3]} position={[1.5, 1.5, 0]}>

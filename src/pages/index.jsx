@@ -9,15 +9,15 @@ import { Content } from "../components/Content";
 function App() {
   return (
     <>
-      <Content />
-      <Canvas camera={{ position: [0, 0, 5], fov: 75, near: 0.1, far: 200 }}>
+      <Canvas
+        className="webgl"
+        camera={{ position: [0, 0, 5], fov: 75, near: 0.01, far: 200 }}
+      >
         <color attach="background" args={["#000000"]} />
         <OrbitControls />
         <Experience />
-        {/* <EffectComposer>
-        <Bloom luminanceThreshold={1} intensity={1.25} mipmapBlur />
-      </EffectComposer> */}
       </Canvas>
+      <Content />
     </>
   );
 }

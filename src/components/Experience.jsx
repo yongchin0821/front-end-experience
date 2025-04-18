@@ -43,16 +43,16 @@ export const Experience = () => {
   const galaxies = [
     {
       id: 0,
-      count: 20000,
+      count: 30000,
       min_radius: 0.2,
-      max_radius: 1.3,
+      max_radius: 1.4,
       color: "#88b3ce",
       size: 0.5,
       amp: 3,
     },
     {
       id: 1,
-      count: 50000,
+      count: 30000,
       min_radius: 0.3,
       max_radius: 1.5,
       color: "#0063f7",
@@ -61,51 +61,60 @@ export const Experience = () => {
     },
     {
       id: 2,
-      count: 10000,
-      min_radius: 0.8,
-      max_radius: 1.6,
+      count: 20000,
+      min_radius: 0.7,
+      max_radius: 1.55,
       color: "#fc00ff",
+      size: 0.5,
+      amp: 3,
+    },
+    {
+      id: 3,
+      count: 50000,
+      min_radius: 0.2,
+      max_radius: 1.55,
+      color: "#ffac00",
       size: 0.5,
       amp: 3,
     },
   ];
 
-  const camera = useThree((state) => state.camera);
+  // const camera = useThree((state) => state.camera);
   // const scene = useThree((state) => state.scene);
 
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
   const point = new THREE.Vector3(0.5, 1.0, 0);
 
-  const raycasterEvent = () => {
-    let mesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(10, 10, 10, 10).rotateX(-Math.PI / 2),
-      new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
-    );
+  // const raycasterEvent = () => {
+  //   let mesh = new THREE.Mesh(
+  //     new THREE.PlaneGeometry(10, 10, 10, 10).rotateX(-Math.PI / 2),
+  //     new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
+  //   );
 
-    let smesh = new THREE.Mesh(
-      new THREE.SphereGeometry(0.1, 10, 10),
-      new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
-    );
+  //   let smesh = new THREE.Mesh(
+  //     new THREE.SphereGeometry(0.1, 10, 10),
+  //     new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
+  //   );
 
-    // scene.add(test);
+  //   // scene.add(test);
 
-    window.addEventListener("pointermove", (event) => {
-      pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-      pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  //   window.addEventListener("pointermove", (event) => {
+  //     pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+  //     pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-      // update the picking ray with the camera and pointer position
-      raycaster.setFromCamera(pointer, camera);
+  //     // update the picking ray with the camera and pointer position
+  //     raycaster.setFromCamera(pointer, camera);
 
-      // calculate objects intersecting the picking ray
-      const intersects = raycaster.intersectObjects([mesh]);
+  //     // calculate objects intersecting the picking ray
+  //     const intersects = raycaster.intersectObjects([mesh]);
 
-      if (intersects[0]) {
-        smesh.position.copy(intersects[0].point);
-        point.copy(intersects[0].point);
-      }
-    });
-  };
+  //     if (intersects[0]) {
+  //       smesh.position.copy(intersects[0].point);
+  //       point.copy(intersects[0].point);
+  //     }
+  //   });
+  // };
 
   const meshRef = useRef();
   const meshRef2 = useRef();
@@ -114,12 +123,12 @@ export const Experience = () => {
   const onPointerMove = (event) => {
     pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
     pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    raycaster.setFromCamera(pointer, camera);
+    raycaster.setFromCamera(pointer, event.camera);
 
     if (meshRef.current) {
       const intersects = raycaster.intersectObject(meshRef.current);
       if (intersects.length > 0) {
-        console.log(intersects[0].point);
+        // console.log(intersects[0].point);
         // meshRef2.current.position.copy(intersects[0].point);
         point.copy(intersects[0].point);
       }
@@ -137,7 +146,7 @@ export const Experience = () => {
       {/* MAIN WORLD */}
 
       {/* <Content /> */}
-      <Sparkles
+      {/* <Sparkles
         scale={6}
         speed={0.5}
         size={2}
@@ -153,7 +162,7 @@ export const Experience = () => {
         saturation={0}
         fade
         speed={2}
-      />
+      /> */}
 
       <group scale={2.5} rotation={[1, 0, 0.3]} position={[1.5, 1.5, 0]}>
         <mesh
@@ -169,7 +178,7 @@ export const Experience = () => {
           visible={false}
           ref={meshRef2}
           rotation={[-Math.PI / 2, 0, 0]}
-          onPointerMove={onPointerMove}
+          // onPointerMove={onPointerMove}
         >
           <sphereGeometry args={[0.1, 10, 10]} />
           <meshBasicMaterial color={0xff0000} wireframe />

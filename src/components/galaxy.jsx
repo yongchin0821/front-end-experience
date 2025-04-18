@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { useEffect, useRef } from "react";
 import testFragmentShader from "./fragment.glsl";
 import testVertexShader from "./vertex.glsl";
-import particleTexture from "./particle3.jpg";
+import particleTexture from "./particle.jpg";
 
 const lerp = (a, b, t) => {
   return a * (1 - t) + b * t;

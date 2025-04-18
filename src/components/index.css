@@ -1,9 +1,17 @@
 .doc {
-  width: 100vw;
   height: 100vh;
-  font-family: Nunito Sans, sans-serif;
+  width: 100vw;
+  position: absolute !important;
+}
+/* 
+body {
+  margin: 0;
+} */
+
+#left p {
+  margin-bottom: 24px;
 }
 
-/* body {
-  margin: 0;
+/* p{
+  margin-bottom: 6px;
 } */

@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { useEffect, useRef } from "react";
 import testFragmentShader from "../shaders/fragment.glsl";
 import testVertexShader from "../shaders/vertex.glsl";
-import particleTexture from "./particle.jpg";
+import particleTexture from "./particle3.jpg";
 
 const lerp = (a, b, t) => {
   return a * (1 - t) + b * t;
@@ -39,6 +39,14 @@ export const Galaxy = ({ min_radius = 0.5, max_radius = 1, ...props }) => {
       "pos",
       new THREE.InstancedBufferAttribute(pos, 3, false)
     );
+
+    // 解决视角问题导致星河消失，目前有两种方式
+    // 一是手动更新包围球
+    // 手动更新包围球，让剔除用到正确的半径
+    geo.current.computeBoundingSphere();
+
+    //二是可以在mesh出禁用掉视锥剔除（frustum culling）
+    //frustumCulled={false}
   };
 
   useFrame((_state, delta) => {
@@ -46,6 +54,7 @@ export const Galaxy = ({ min_radius = 0.5, max_radius = 1, ...props }) => {
     // _state.gl.render(_state.scene, _state.camera);
     shaderRef.current.uniforms.time.value += delta;
     shaderRef.current.uniforms.uMouse.value = props.point;
+    // _state.camera.updateProjectionMatrix();
   });
 
   useEffect(() => {
@@ -78,7 +87,8 @@ export const Galaxy = ({ min_radius = 0.5, max_radius = 1, ...props }) => {
           vertexShader={testVertexShader}
           fragmentShader={testFragmentShader}
           transparent={true}
-          depthWrite={false}
+          // depthWrite={false}
+          depthTest={false}
         />
       </mesh>
     </>

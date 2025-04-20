@@ -46,7 +46,7 @@ export const Galaxy = ({ min_radius = 0.5, max_radius = 1, ...props }) => {
     geo.current.computeBoundingSphere();
 
     //二是可以在mesh出禁用掉视锥剔除（frustum culling）
-    //frustumCulled={false}
+    //frustumCulled={false}.
   };
 
   useFrame((_state, delta) => {

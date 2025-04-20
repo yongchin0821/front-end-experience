@@ -8,74 +8,146 @@ import {
   Stars,
   Sparkles,
 } from "@react-three/drei";
-import { useThree, useFrame } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
 import * as THREE from "three";
 import { useEffect, useRef } from "react";
 import { Galaxy } from "./Galaxy";
 
-// const galaxies = [
-//   {
-//     id: 0,
-//     min_radius: 0.3,
-//     max_radius: 1.5,
-//     color: "#9d00ff",
-//     size: 1,
-//     amp: 1,
-//   },
-//   {
-//     id: 1,
-//     min_radius: 0.3,
-//     max_radius: 1.5,
-//     color: "#88b3ce",
-//     size: 0.5,
-//     amp: 3,
-//   },
-// ];
+const color = {
+  blue: "#0063f7",
+  green: "#88b3ce",
+  purple: "#fc00ff",
+};
+
+const galaxies = [
+  {
+    id: 0,
+    count: 5000,
+    min_radius: 1.35,
+    max_radius: 1.55,
+    color: color.green,
+    size: 1,
+    amp: 3,
+  },
+  {
+    id: 1,
+    count: 5000,
+    min_radius: 1.4,
+    max_radius: 1.5,
+    color: color.blue,
+    size: 1,
+    amp: 1,
+  },
+
+  {
+    id: 2,
+    count: 5000,
+    min_radius: 1.0,
+    max_radius: 1.3,
+    color: color.green,
+    size: 1,
+    amp: 3,
+  },
+  {
+    id: 3,
+    count: 5000,
+    min_radius: 1.0,
+    max_radius: 1.3,
+    color: color.blue,
+    size: 1,
+    amp: 1,
+  },
+  {
+    id: 4,
+    count: 5000,
+    min_radius: 1.25,
+    max_radius: 1.3,
+    color: color.blue,
+    size: 1,
+    amp: 1,
+  },
+
+  {
+    id: 5,
+    count: 2000,
+    min_radius: 0.8,
+    max_radius: 0.85,
+    color: color.purple,
+    size: 0.5,
+    amp: 1,
+  },
+  {
+    id: 6,
+    count: 5000,
+    min_radius: 0.6,
+    max_radius: 0.85,
+    color: color.green,
+    size: 0.5,
+    amp: 3,
+  },
+  {
+    id: 7,
+    count: 5000,
+    min_radius: 0.6,
+    max_radius: 0.85,
+    color: color.blue,
+    size: 1,
+    amp: 1,
+  },
+
+  {
+    id: 8,
+    count: 5000,
+    min_radius: 0.56,
+    max_radius: 0.57,
+    color: color.blue,
+    size: 0.5,
+    amp: 3,
+  },
+  {
+    id: 9,
+    count: 5000,
+    min_radius: 0.3,
+    max_radius: 0.5,
+    color: color.green,
+    size: 0.5,
+    amp: 3,
+  },
+  {
+    id: 10,
+    count: 5000,
+    min_radius: 0.3,
+    max_radius: 0.5,
+    color: color.blue,
+    size: 1,
+    amp: 1,
+  },
+
+  {
+    id: 19,
+    count: 20000,
+    min_radius: 0.1,
+    max_radius: 1.55,
+    color: color.green,
+    size: 0.8,
+    amp: 3,
+  },
+  {
+    id: 20,
+    count: 20000,
+    min_radius: 0.1,
+    max_radius: 1.55,
+    color: color.blue,
+    size: 0.8,
+    amp: 1,
+  },
+];
 
 export const Experience = () => {
   const { colorA } = useControls({
     colorA: "#0f40f5",
   });
-
-  const galaxies = [
-    {
-      id: 0,
-      count: 30000,
-      min_radius: 0.2,
-      max_radius: 1.4,
-      color: "#88b3ce",
-      size: 0.5,
-      amp: 3,
-    },
-    {
-      id: 1,
-      count: 30000,
-      min_radius: 0.3,
-      max_radius: 1.5,
-      color: "#0063f7",
-      size: 1,
-      amp: 1,
-    },
-    {
-      id: 2,
-      count: 20000,
-      min_radius: 0.7,
-      max_radius: 1.55,
-      color: "#fc00ff",
-      size: 0.5,
-      amp: 3,
-    },
-    {
-      id: 3,
-      count: 50000,
-      min_radius: 0.2,
-      max_radius: 1.55,
-      color: "#ffac00",
-      size: 0.5,
-      amp: 3,
-    },
-  ];
 
   // const camera = useThree((state) => state.camera);
   // const scene = useThree((state) => state.scene);
@@ -143,18 +215,18 @@ export const Experience = () => {
     <>
       {/* MAIN WORLD */}
 
-      {/* <Sparkles
+      <Sparkles
         scale={6}
-        speed={0.5}
+        speed={0.1}
         size={2}
-        count={100}
+        count={200}
         opacity={0.3}
-      ></Sparkles> */}
+      ></Sparkles>
 
       <Stars
         radius={100}
         depth={50}
-        count={5000}
+        count={1000}
         factor={4}
         saturation={0}
         fade

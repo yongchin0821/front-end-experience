@@ -7,10 +7,7 @@ import { Content } from "./components/Content";
 function App() {
   return (
     <>
-      <Canvas
-        className="webgl"
-        camera={{ position: [0, 0, 5], fov: 75, near: 1, far: 500 }}
-      >
+      <Canvas className="webgl" camera={{ position: [0, 0, 5], fov: 75 }}>
         {/* <color attach="background" args={["#000000"]} /> */}
         <OrbitControls />
         <Experience />

@@ -18,13 +18,22 @@ export function Content() {
     ["mophi", "dsd", "dsads"],
   ];
 
-  // const items_list = useRef(["Item 1", "Item 2", "Item 3"]);
   const [items_list, setItem] = useState(["数据治理平台", "yongchin's blog"]);
 
   const navEmit = (data) => {
     // console.log("子组件传递的数据:", data);
     // items_list.current = items_list_map[data];
     setItem(items_list_map[data]);
+  };
+
+  const address = {
+    数据治理平台: "https://yongchin.cn/demo-digitalplatform",
+    "yongchin's blog": "https://yongchin.cn/",
+  };
+  const openWindow = (item, index) => {
+    if (address[item]) {
+      window.open(address[item], "_blank");
+    }
   };
 
   return (
@@ -51,7 +60,7 @@ export function Content() {
 
             <AnimatedList
               items={items_list}
-              onItemSelect={(item, index) => console.log(item, index)}
+              onItemSelect={(item, index) => openWindow(item, index)}
               showGradients={true}
               enableArrowNavigation={true}
               displayScrollbar={true}

@@ -10,7 +10,6 @@ function App() {
 
   return (
     <Canvas
-      
       gl={{ antialias: true }} // 开启抗锯齿
       camera={{
         position: [0, 0, 8 * 2],

@@ -14,8 +14,8 @@ export function Content() {
 
   const items_list_map = [
     ["数据治理平台", "yongchin's blog"],
-    ["Slide Show", "Item 2", "Item 3"],
-    ["mophi", "dsd", "dsads"],
+    ["Slide Show"],
+    ["hologram", "morphing"],
   ];
 
   const [items_list, setItem] = useState(["数据治理平台", "yongchin's blog"]);
@@ -29,6 +29,10 @@ export function Content() {
   const address = {
     数据治理平台: "https://yongchin.cn/demo-digitalplatform",
     "yongchin's blog": "https://yongchin.cn/",
+    "Slide Show": "https://frontend.yongchin.cn/slideshow",
+    "hologram": "https://frontend.yongchin.cn/shaders/hologram",
+    "morphing": "https://frontend.yongchin.cn/shaders/morphing",
+    "dissolve": "https://frontend.yongchin.cn/shaders/dissolve",
   };
   const openWindow = (item, index) => {
     if (address[item]) {

@@ -79,7 +79,6 @@ export const Experience = () => {
     text: button(() => {
       particles.morph(3);
     }),
-    positionx: { value: 0, min: 0, max: 1, step: 0.0001, name: "dsds" },
   });
 
   const geo = useRef();
@@ -146,7 +145,7 @@ export const Experience = () => {
   return (
     <>
       <OrbitControls enableDamping={true} />
-      <points position-x={debug_opt.positionx} frustumCulled={false}>
+      <points frustumCulled={false}>
         <bufferGeometry ref={geo}></bufferGeometry>
         <myParticleMaterial
           uProgress={debug_opt.Progress}

@@ -42,6 +42,7 @@ import Home from "./pages/home/index";
 import Slideshow from "./pages/SlideShow/index";
 import Prod from "./pages/prod/index";
 import Dissolve from "./pages/shaders/dissolve/index";
+import Hologram from "./pages/shaders/hologram/index";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
   {
     path: "/shaders/dissolve",
     Component: Dissolve,
+  },
+  {
+    path: "/shaders/hologram",
+    Component: Hologram,
   },
 ]);
 

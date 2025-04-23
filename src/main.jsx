@@ -43,6 +43,7 @@ import Slideshow from "./pages/SlideShow/index";
 import Prod from "./pages/prod/index";
 import Dissolve from "./pages/shaders/dissolve/index";
 import Hologram from "./pages/shaders/hologram/index";
+import Morphing from "./pages/shaders/morphing/index";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
   {
     path: "/shaders/hologram",
     Component: Hologram,
+  },
+  {
+    path: "/shaders/morphing",
+    Component: Morphing,
   },
 ]);
 

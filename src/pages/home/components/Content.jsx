@@ -15,7 +15,7 @@ export function Content() {
   const items_list_map = [
     ["数据治理平台", "yongchin's blog"],
     ["Slide Show"],
-    ["hologram", "morphing"],
+    ["hologram", "morphing", "dissolve"],
   ];
 
   const [items_list, setItem] = useState(["数据治理平台", "yongchin's blog"]);
@@ -30,9 +30,9 @@ export function Content() {
     数据治理平台: "https://yongchin.cn/demo-digitalplatform",
     "yongchin's blog": "https://yongchin.cn/",
     "Slide Show": "https://frontend.yongchin.cn/slideshow",
-    "hologram": "https://frontend.yongchin.cn/shaders/hologram",
-    "morphing": "https://frontend.yongchin.cn/shaders/morphing",
-    "dissolve": "https://frontend.yongchin.cn/shaders/dissolve",
+    hologram: "https://frontend.yongchin.cn/shaders/hologram",
+    morphing: "https://frontend.yongchin.cn/shaders/morphing",
+    dissolve: "https://frontend.yongchin.cn/shaders/dissolve",
   };
   const openWindow = (item, index) => {
     if (address[item]) {
@@ -49,7 +49,7 @@ export function Content() {
             <p className="text-5xl">Thanks for browsing yongchin's demo</p>
           </div>
 
-          <div style={{ height: "600px", position: "relative" }}>
+          <div style={{ minHeight: "400px", position: "relative" }}>
             <GooeyNav
               navEmit={navEmit}
               items={items}

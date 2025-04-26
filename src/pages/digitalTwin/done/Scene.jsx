@@ -39,6 +39,7 @@ const buildShapes = (feature) => {
       shapes.push(shape);
     });
   });
+
   return shapes;
 };
 
@@ -57,7 +58,7 @@ const MapShape = memo(({ feature, index }) => {
   const extrudeSettings = useMemo(
     () => ({
       depth: hovered ? 1.5 : 0.5,
-      bevelEnabled: false,
+      // bevelEnabled: false, //在0.175版本后，该设置不能改为否则会出bug导致地图镂空。原因可能是因为“automatic shape cleaning” step for ExtrudeGeometry。这个bug坑了我3小时。
     }),
     [hovered, index]
   );

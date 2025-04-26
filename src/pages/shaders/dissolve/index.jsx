@@ -8,9 +8,9 @@ function App() {
     <Canvas shadows camera={{ position: [3, 3, 4], fov: 42 }}>
       <color attach="background" args={["#ececec"]} />
       <Experience />
-      <EffectComposer>
+      {/* <EffectComposer>
         <Bloom luminanceThreshold={1} intensity={1.25} mipmapBlur />
-      </EffectComposer>
+      </EffectComposer> */}
     </Canvas>
   );
 }

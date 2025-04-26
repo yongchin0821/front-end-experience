@@ -1,0 +1,181 @@
+import { Center } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+import gsap from "gsap";
+import { useAtom } from "jotai";
+import { useControls } from "leva";
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import * as THREE from "three";
+
+// 常量抽离
+const CENTER_LNG = 110;
+const CENTER_LAT = 35;
+
+// 工具函数：对坐标偏移
+const transformCoord = ([lng, lat]) => [lng - CENTER_LNG, lat - CENTER_LAT];
+
+// 工具函数：构建 shapes
+const buildShapes = (feature) => {
+  const shapes = [];
+  const coordinates =
+    feature.geometry.type === "MultiPolygon"
+      ? feature.geometry.coordinates
+      : [feature.geometry.coordinates];
+
+  coordinates.forEach((polygon) => {
+    polygon.forEach((ring) => {
+      const shape = new THREE.Shape();
+      ring.forEach((coord, i) => {
+        const [x, y] = transformCoord(coord);
+        if (i === 0) shape.moveTo(x, y);
+        else shape.lineTo(x, y);
+      });
+      shapes.push(shape);
+    });
+  });
+  return shapes;
+};
+
+let currentSecond = 0;
+
+const MapShape = memo(({ feature, index }) => {
+  const meshRef = useRef(null);
+  const [hovered, setHovered] = useState(false);
+  const { color, Linecolor } = useControls({
+    color: "#ffffff",
+    Linecolor: "#151d1c",
+  });
+
+  const shapes = useMemo(() => buildShapes(feature), [feature]);
+
+  const extrudeSettings = useMemo(
+    () => ({
+      depth: hovered ? 1.5 : 0.5,
+      bevelEnabled: false,
+    }),
+    [hovered, index]
+  );
+
+  const geometry = useMemo(
+    () => new THREE.ExtrudeGeometry(shapes, extrudeSettings),
+    [shapes, extrudeSettings]
+  );
+  const edges = useMemo(() => new THREE.EdgesGeometry(geometry), [geometry]);
+
+  const handlePointerOver = useCallback(() => {
+    setHovered(true);
+  }, [feature.properties.name]);
+
+  const handlePointerOut = useCallback(() => {
+    setHovered(false);
+  }, []);
+
+  return (
+    <group name={feature.properties.adcode}>
+      <mesh
+        ref={meshRef}
+        geometry={geometry}
+        onPointerOver={handlePointerOver}
+        onPointerOut={handlePointerOut}
+      >
+        <meshStandardMaterial
+          color={hovered ? "#ff6b6b" : color}
+          // color={"#ff6b6b"}
+          metalness={0.1}
+          roughness={0.5}
+        />
+      </mesh>
+      <lineSegments geometry={edges}>
+        <lineBasicMaterial color={Linecolor} linewidth={2} />
+      </lineSegments>
+    </group>
+  );
+});
+
+// 工具函数：计算区域中心（备用，当 feature.properties.center 不存在时）
+const calculateShapeCenter = (coordinates) => {
+  let xSum = 0,
+    ySum = 0,
+    count = 0;
+  const coords = Array.isArray(coordinates[0][0][0])
+    ? coordinates[0][0]
+    : coordinates[0];
+  coords.forEach(([lng, lat]) => {
+    const [x, y] = transformCoord([lng, lat]);
+    xSum += x;
+    ySum += y;
+    count++;
+  });
+  return [xSum / count, ySum / count];
+};
+
+const ChinaMap = ({ geoData }) => {
+  const startAnimation = useCallback(() => {
+    if (!geoData.length) return;
+    const randomIndex = Math.floor(Math.random() * geoData.length);
+    const region = geoData[randomIndex];
+
+    const center1 = calculateShapeCenter(region.geometry.coordinates);
+
+    // 动画逻辑可在此处添加（原代码中未完全实现）
+  }, [geoData]);
+
+  useFrame((state) => {
+    const nowSecond = Math.floor(state.clock.elapsedTime);
+    if (nowSecond !== currentSecond) {
+      currentSecond = nowSecond;
+      if (!(currentSecond % 4)) {
+        // startAnimation(); // 原代码中被注释，可根据需要启用
+      }
+    }
+  });
+
+  return (
+    <group name="chinaMapGroup">
+      {geoData.map((feature, index) => (
+        <MapShape
+          key={feature.properties.adcode || index}
+          feature={feature}
+          index={index}
+        />
+      ))}
+    </group>
+  );
+};
+
+const Scene = () => {
+  const url = "/geodata.json";
+  const [geoData, setGeoData] = useState([]);
+
+  useEffect(() => {
+    const fetchGeoJSON = async () => {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Network response was not ok");
+        const data = await response.json();
+        data.features.pop();
+        setGeoData(data.features);
+      } catch (error) {
+        console.error("Failed to fetch GeoJSON:", error);
+      }
+    };
+    fetchGeoJSON();
+  }, [url]);
+
+  const chinaMapRef = useRef(null);
+
+  return (
+    <group>
+      <Center ref={chinaMapRef}>
+        <ChinaMap geoData={geoData} />
+      </Center>
+    </group>
+  );
+};
+export default Scene;

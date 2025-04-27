@@ -12,6 +12,7 @@ import React, {
   useState,
 } from "react";
 import * as THREE from "three";
+import ImgFloor from "./components/ImgFloor";
 
 // 常量抽离
 const CENTER_LNG = 110;
@@ -49,8 +50,8 @@ const MapShape = memo(({ feature, index }) => {
   const meshRef = useRef(null);
   const [hovered, setHovered] = useState(false);
   const { color, Linecolor } = useControls({
-    color: "#ffffff",
-    Linecolor: "#151d1c",
+    color: "#0F7AC9",
+    Linecolor: "#4CE3FF",
   });
 
   const shapes = useMemo(() => buildShapes(feature), [feature]);
@@ -90,6 +91,8 @@ const MapShape = memo(({ feature, index }) => {
           // color={"#ff6b6b"}
           metalness={0.1}
           roughness={0.5}
+          opacity={1}
+          // transparent
         />
       </mesh>
       <lineSegments geometry={edges}>
@@ -151,6 +154,12 @@ const ChinaMap = ({ geoData }) => {
 };
 
 const Scene = () => {
+  // const { color, opacity, rotationZ } = useControls({
+  //   color: { value: '#ffffff', label: '颜色' },
+  //   opacity: { value: 0.95, min: 0, max: 1, step: 0.01, label: '透明度' },
+  //   rotationZ: { value: 0.01, min: -0.1, max: 0.1, step: 0.01, label: '自转速度' },
+  // })
+
   const url = "/geodata.json";
   const [geoData, setGeoData] = useState([]);
 
@@ -175,6 +184,11 @@ const Scene = () => {
     <group>
       <Center ref={chinaMapRef}>
         <ChinaMap geoData={geoData} />
+        <ImgFloor
+          position={[-2, 0, -2]}
+          imgSrcPath="/digitaltwin/done/imgFloor3.png"
+          opacity={0.3}
+        />
       </Center>
     </group>
   );

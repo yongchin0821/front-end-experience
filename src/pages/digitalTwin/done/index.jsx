@@ -2,6 +2,7 @@ import Scene from "./Scene";
 import "./index.css";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+import { Home } from "./Home";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <axesHelper args={[5]} />
         <OrbitControls enablePan enableZoom enableRotate />
       </Canvas>
+      <Home />
     </>
   );
 }

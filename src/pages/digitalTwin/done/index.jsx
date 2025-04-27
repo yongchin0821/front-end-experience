@@ -1,13 +1,13 @@
 import Scene from "./Scene";
-import "./index.css";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { Home } from "./Home";
+import styles from "./index.module.css";
 
 function App() {
   return (
     <>
-      <Canvas className="webgl">
+      <Canvas className={styles.webgl}>
         <group scale={0.09}>
           <Scene />
         </group>

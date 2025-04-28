@@ -27,10 +27,7 @@ export default function ImgFloor() {
       className="custom-spotlight-card"
       spotlightColor="rgba(0, 229, 255, 0.2)"
     >
-      <div className="flex flex-col pt-4 pb-4 rounded-3xl w-[375px] h-[560px] overflow-hidden">
-        <h3 className="text-3xl text-left p-7 pt-6 pb-8 font-bold text-white">
-          Incident Report
-        </h3>
+      <div className="flex flex-col pt-4 pb-4 rounded-3xl w-[500px] h-[560px] overflow-hidden">
         <BarList
           id="labels-gradient"
           data={labelsData}

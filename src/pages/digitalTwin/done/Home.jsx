@@ -1,16 +1,15 @@
-import SpotlightCard from "./components/SpotlightCard";
 import Cardone from "./components/Cardone";
 import Cardtwo from "./components/Cardtwo";
 import BarList from "./components/charts/BarList";
 import styles from "./index.module.css";
 
 export function Home() {
-
   return (
     <div className={`${styles.doc} flex flex-col justify-between`}>
-      <div className={`${styles.header} text-white text-center`}>
-        <div id="content">
-          <p className="text-9xl">Greetings</p>
+      <div className={`${styles.header} text-white text-center h-38`}>
+        <div className={styles.content}>
+          <p className={`${styles["head-title"]}`}>全国经济大数据</p>
+          <p className={`${styles["head-subtext"]}`}>quan guo jing ji da shu ju</p>
         </div>
       </div>
 
@@ -25,7 +24,7 @@ export function Home() {
         </div>
       </div>
 
-      <div className="footer min-h-24">dsdsad</div>
+      <div className="footer min-h-24">footer</div>
     </div>
   );
 }

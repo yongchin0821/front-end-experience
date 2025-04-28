@@ -14,9 +14,43 @@
 }
 
 .header {
-  background-color: rgb(8, 92, 177, 0.3);
+  position: relative;
 }
 
-#content p {
+.content {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  background: url(/digitaltwin/done/header-bg.png) no-repeat;
+  background-size: 100%;
+  text-align: center;
+  box-sizing: border-box;
+  padding-top: 10px;
+}
+
+/* .content p {
   margin-bottom: 46px;
+} */
+
+.head-title {
+  color: #fff;
+  font-size: 36px;
+  letter-spacing: 1px;
+  font-family: 阿里妈妈数黑体 Bold;
+  background: -webkit-linear-gradient(rgb(104, 200, 246), rgb(255, 255, 255));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.head-subtext {
+  opacity: 0.64;
+  font-size: 14px;
+  letter-spacing: 3px;
+  font-weight: 300;
+  font-family: D-DIN;
+  line-height: 14.4px;
+  color: #c4f3fe;
 }

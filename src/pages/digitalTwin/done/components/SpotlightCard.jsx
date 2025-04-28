@@ -1,7 +1,11 @@
 import { useRef } from "react";
-import "./SpotlightCard.css";
+import styles from "./SpotlightCard.module.css";
 
-const SpotlightCard = ({ children, className = "", spotlightColor = "rgba(255, 255, 255, 0.25)" }) => {
+const SpotlightCard = ({
+  children,
+  className = "",
+  spotlightColor = "rgba(255, 255, 255, 0.1)",
+}) => {
   const divRef = useRef(null);
 
   const handleMouseMove = (e) => {
@@ -18,8 +22,17 @@ const SpotlightCard = ({ children, className = "", spotlightColor = "rgba(255, 2
     <div
       ref={divRef}
       onMouseMove={handleMouseMove}
-      className={`card-spotlight ${className}`}
+      className={`${styles["card-spotlight"]} ${className} m-6`}
     >
+      <div
+        style={{
+          background: "url(/digitaltwin/done/title.png) no-repeat",
+          backgroundSize: "100% 100%",
+        }}
+        className="text-2xl pl-20 font-bold text-white"
+      >
+        <div className={`${styles.diyfont}`}>数字平台</div>
+      </div>
       {children}
     </div>
   );

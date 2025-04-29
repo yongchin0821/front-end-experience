@@ -50,7 +50,7 @@ const MapShape = memo(({ feature, index }) => {
   const meshRef = useRef(null);
   const [hovered, setHovered] = useState(false);
   const { color, Linecolor } = useControls({
-    color: "#0F7AC9",
+    color: "#348CB9",
     Linecolor: "#4CE3FF",
   });
 

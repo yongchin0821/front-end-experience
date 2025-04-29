@@ -13,12 +13,16 @@ export function Content() {
   ];
 
   const items_list_map = [
-    ["数据治理平台", "yongchin's blog"],
+    ["数据治理平台", "数字大屏", "yongchin's blog"],
     ["Slide Show"],
     ["hologram", "morphing", "dissolve"],
   ];
 
-  const [items_list, setItem] = useState(["数据治理平台", "yongchin's blog"]);
+  const [items_list, setItem] = useState([
+    "数据治理平台",
+    "数字大屏",
+    "yongchin's blog",
+  ]);
 
   const navEmit = (data) => {
     // console.log("子组件传递的数据:", data);
@@ -28,6 +32,7 @@ export function Content() {
 
   const address = {
     数据治理平台: "https://yongchin.cn/demo-digitalplatform",
+    数字大屏: "https://frontend.yongchin.cn/digitaltwin/done",
     "yongchin's blog": "https://yongchin.cn/",
     "Slide Show": "https://frontend.yongchin.cn/slideshow",
     hologram: "https://frontend.yongchin.cn/shaders/hologram",

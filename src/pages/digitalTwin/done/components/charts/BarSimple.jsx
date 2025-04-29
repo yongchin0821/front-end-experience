@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import SpotlightCard from "./SpotlightCard";
+import SpotlightCard from "../SpotlightCard";
 import {
   BarChart,
   LinearYAxis,
@@ -19,10 +19,10 @@ import { motion } from "motion/react";
 
 export default function ImgFloor() {
   const labelsData = [
-    { key: "DLP", data: 13 },
+    { key: "DLP", data: 10 },
     { key: "SIEM", data: 2 },
     { key: "Endpoint", data: 7 },
-    { key: "DLP2", data: 13 },
+    { key: "DLP2", data: 9 },
     { key: "SIEM2", data: 2 },
     { key: "Endpoint2", data: 7 },
   ];
@@ -32,9 +32,7 @@ export default function ImgFloor() {
       spotlightColor="rgba(0, 229, 255, 0.2)"
     >
       <div className="flex flex-col pt-4 pb-4 rounded-3xl w-[500px] h-[560px] overflow-hidden">
-        <h3 className="text-3xl text-left p-7 pt-6 pb-8 font-bold text-white">
-          Incident Report
-        </h3>
+        <div className="pb-8"></div>
         <BarChart
           id="labels-gradient"
           data={labelsData}
@@ -56,7 +54,7 @@ export default function ImgFloor() {
                       format={(text) => `${text.slice(0, 5)}...`}
                     />
                   }
-                  tickSize={30}
+                  tickSize={60}
                 />
               }
             />
@@ -67,7 +65,7 @@ export default function ImgFloor() {
                 <Bar
                   glow={{
                     blur: 20,
-                    opacity: 0.3,
+                    opacity: 0.5,
                   }}
                   gradient={
                     <Gradient
@@ -264,7 +262,6 @@ export default function ImgFloor() {
           </motion.div>
         </div>
       </div>
-      ;
     </SpotlightCard>
   );
 }

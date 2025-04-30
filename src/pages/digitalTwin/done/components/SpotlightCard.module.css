@@ -1,13 +1,16 @@
 .card-spotlight {
-  position: relative;
+  /* position: relative; */
   border-radius: 1.5rem;
   /* border: 1px solid #222; */
-  background-color: rgb(23, 104, 253, 0);
+  /* 设置背景色 */
+  background-color: rgb(23, 104, 253, 0.5);
   /* padding: 2rem; */
   overflow: hidden;
   --mouse-x: 50%;
   --mouse-y: 50%;
   --spotlight-color: rgba(255, 255, 255, 0.05);
+  height: 300px;
+  width: 400px;
 }
 
 .card-spotlight::before {
@@ -37,9 +40,9 @@
   left: 32px; */
   color: #fff;
   /* font-size: 18px; */
-  letter-spacing: 1.6px;
-  height: 36px;
-  line-height: 36px;
+  /* letter-spacing: 1.6px; */
+  height: 26px;
+  /* line-height: 26px; */
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 700;
   background: -webkit-linear-gradient(rgb(234, 247, 255), rgb(121, 191, 249));

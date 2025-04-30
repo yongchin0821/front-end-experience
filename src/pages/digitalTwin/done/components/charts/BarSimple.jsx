@@ -31,8 +31,8 @@ export default function ImgFloor() {
       className="custom-spotlight-card"
       spotlightColor="rgba(0, 229, 255, 0.2)"
     >
-      <div className="flex flex-col pt-4 pb-4 rounded-3xl w-[500px] h-[560px] overflow-hidden">
-        <div className="pb-8"></div>
+      <div className="flex flex-col h-full pt-4 pb-4 text-xs">
+        <div className="pb-4"></div>
         <BarChart
           id="labels-gradient"
           data={labelsData}
@@ -54,7 +54,7 @@ export default function ImgFloor() {
                       format={(text) => `${text.slice(0, 5)}...`}
                     />
                   }
-                  tickSize={60}
+                  tickSize={30}
                 />
               }
             />
@@ -65,7 +65,7 @@ export default function ImgFloor() {
                 <Bar
                   glow={{
                     blur: 20,
-                    opacity: 0.5,
+                    opacity: 0.3,
                   }}
                   gradient={
                     <Gradient
@@ -94,7 +94,7 @@ export default function ImgFloor() {
             <GridlineSeries line={<Gridline strokeColor="#7E7E8F75" />} />
           }
         />
-        <div className="flex flex-col pl-8 pr-8 pt-8 font-mono divide-y divide-[#262631]">
+        <div className="flex flex-col h-full pl-4 pr-4 font-mono divide-y divide-[#262631]">
           <motion.div
             initial={{
               opacity: 0,
@@ -104,7 +104,7 @@ export default function ImgFloor() {
               opacity: 1,
               y: 0,
             }}
-            className="flex w-full pb-4 pt-4 items-center gap-2"
+            className="flex w-full pb-2 pt-2 items-center gap-2"
           >
             <div className="flex flex-row gap-2 items-center text-base w-1/2 text-[#9A9AAF]">
               <svg
@@ -119,12 +119,10 @@ export default function ImgFloor() {
                   fill="#E84045"
                 />
               </svg>
-              <span className="truncate" title="Mean Time to Respond">
-                Mean Time to Respond
-              </span>
+              <span className="truncate text-xs">Mean Time to Respond</span>
             </div>
             <div className="flex gap-2 w-1/2 justify-end">
-              <span className="font-semibold text-xl text-white">6 Hours</span>
+              <span className="font-semibold text-white">6 Hours</span>
               <svg
                 width="28"
                 height="28"
@@ -160,7 +158,7 @@ export default function ImgFloor() {
             transition={{
               delay: 0.05,
             }}
-            className="flex w-full pb-4 pt-4 items-center gap-2"
+            className="flex w-full pb-2 pt-2 items-center gap-2"
           >
             <div className="flex flex-row gap-2 items-center text-base w-1/2 text-[#9A9AAF]">
               <svg
@@ -180,7 +178,7 @@ export default function ImgFloor() {
               </span>
             </div>
             <div className="flex gap-2 w-1/2 justify-end">
-              <span className="font-semibold text-xl text-white">4 Hours</span>
+              <span className="font-semibold text-sl text-white">4 Hours</span>
               <svg
                 width="28"
                 height="28"
@@ -216,7 +214,7 @@ export default function ImgFloor() {
             transition={{
               delay: 0.1,
             }}
-            className="flex w-full pb-4 pt-4 items-center gap-2"
+            className="flex w-full pb-2 pt-2 items-center gap-2"
           >
             <div className="flex flex-row gap-2 items-center text-base w-1/2 text-[#9A9AAF]">
               <svg
@@ -236,7 +234,7 @@ export default function ImgFloor() {
               </span>
             </div>
             <div className="flex gap-2 w-1/2 justify-end">
-              <span className="font-semibold text-xl text-white">10%</span>
+              <span className="font-semibold text-sl text-white">10%</span>
               <svg
                 width="28"
                 height="28"
@@ -262,6 +260,7 @@ export default function ImgFloor() {
           </motion.div>
         </div>
       </div>
+      ;
     </SpotlightCard>
   );
 }

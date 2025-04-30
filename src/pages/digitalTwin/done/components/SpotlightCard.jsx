@@ -22,14 +22,14 @@ const SpotlightCard = ({
     <div
       ref={divRef}
       onMouseMove={handleMouseMove}
-      className={`${styles["card-spotlight"]} ${className} m-6`}
+      className={`${styles["card-spotlight"]} ${className} m-2 p-6`}
     >
       <div
         style={{
           background: "url(/digitaltwin/done/title.png) no-repeat",
           backgroundSize: "100% 100%",
         }}
-        className="text-2xl pl-20 font-bold text-white"
+        className="text-sl pl-20 font-bold text-white"
       >
         <div className={`${styles.diyfont}`}>数字平台</div>
       </div>

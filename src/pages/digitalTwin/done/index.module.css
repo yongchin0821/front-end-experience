@@ -15,7 +15,7 @@
 
 .header {
   position: relative;
-  height: 200px;
+  height: 100px;
 }
 
 .content {
@@ -23,7 +23,7 @@
   left: 50%;
   transform: translate(-50%);
   width: 100vw;
-  height: 200px;
+  height: 120px;
   margin: 0 auto;
   background: url(/digitaltwin/done/header-bg.png) no-repeat;
   background-size: 100%;

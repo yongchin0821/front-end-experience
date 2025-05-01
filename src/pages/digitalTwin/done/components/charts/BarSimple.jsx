@@ -31,7 +31,7 @@ export default function ImgFloor() {
       className="custom-spotlight-card"
       spotlightColor="rgba(0, 229, 255, 0.2)"
     >
-      <div className="flex flex-col h-full pt-4 pb-4 text-xs">
+      <div className="flex flex-col pt-4 h-full text-xs">
         <div className="pb-4"></div>
         <BarChart
           id="labels-gradient"
@@ -94,7 +94,7 @@ export default function ImgFloor() {
             <GridlineSeries line={<Gridline strokeColor="#7E7E8F75" />} />
           }
         />
-        <div className="flex flex-col h-full pl-4 pr-4 font-mono divide-y divide-[#262631]">
+        <div className="flex flex-col pl-2 pr-2 font-mono divide-y divide-[#262631]">
           <motion.div
             initial={{
               opacity: 0,
@@ -106,7 +106,7 @@ export default function ImgFloor() {
             }}
             className="flex w-full pb-2 pt-2 items-center gap-2"
           >
-            <div className="flex flex-row gap-2 items-center text-base w-1/2 text-[#9A9AAF]">
+            <div className="flex flex-row gap-2 items-center w-1/2 text-[#9A9AAF]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -124,8 +124,8 @@ export default function ImgFloor() {
             <div className="flex gap-2 w-1/2 justify-end">
               <span className="font-semibold text-white">6 Hours</span>
               <svg
-                width="28"
-                height="28"
+                width="20"
+                height="20"
                 viewBox="0 0 28 28"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -173,15 +173,13 @@ export default function ImgFloor() {
                   fill="#E84045"
                 />
               </svg>
-              <span className="truncate" title="Incident Response Time">
-                Incident Response Time
-              </span>
+              <span className="truncate text-xs">Incident Response Time</span>
             </div>
             <div className="flex gap-2 w-1/2 justify-end">
-              <span className="font-semibold text-sl text-white">4 Hours</span>
+              <span className="font-semibold text-sx text-white">4 Hours</span>
               <svg
-                width="28"
-                height="28"
+                width="20"
+                height="20"
                 viewBox="0 0 28 28"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -196,62 +194,6 @@ export default function ImgFloor() {
                 <path
                   d="M9.50134 12.6111L14.0013 8.16663M14.0013 8.16663L18.5013 12.6111M14.0013 8.16663L14.0013 19.8333"
                   stroke="#F08083"
-                  strokeWidth="2"
-                  strokeLinecap="square"
-                />
-              </svg>
-            </div>
-          </motion.div>
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              delay: 0.1,
-            }}
-            className="flex w-full pb-2 pt-2 items-center gap-2"
-          >
-            <div className="flex flex-row gap-2 items-center text-base w-1/2 text-[#9A9AAF]">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-              >
-                <path
-                  d="M10.0001 2.10535C9.35241 2.10535 8.70472 2.42118 8.35459 3.05343L1.9044 14.7063C1.22414 15.9354 2.14514 17.5 3.5499 17.5H16.4511C17.8559 17.5 18.7769 15.9354 18.0966 14.7063L11.6456 3.05343C11.2955 2.42118 10.6478 2.10535 10.0001 2.10535ZM10.0001 3.31222C10.212 3.31222 10.4237 3.42739 10.5519 3.65889L17.0029 15.3117C17.2501 15.7585 16.9605 16.25 16.4511 16.25H3.5499C3.04051 16.25 2.7509 15.7585 2.99815 15.3117L9.44834 3.65889C9.57655 3.42739 9.78821 3.31222 10.0001 3.31222ZM9.99033 6.65776C9.82472 6.66034 9.6669 6.72856 9.55154 6.84743C9.43618 6.96629 9.37272 7.12609 9.3751 7.29171V11.4584C9.37393 11.5412 9.38923 11.6234 9.42011 11.7003C9.451 11.7771 9.49685 11.8471 9.555 11.9061C9.61315 11.965 9.68245 12.0119 9.75886 12.0438C9.83527 12.0758 9.91727 12.0923 10.0001 12.0923C10.0829 12.0923 10.1649 12.0758 10.2413 12.0438C10.3178 12.0119 10.387 11.965 10.4452 11.9061C10.5034 11.8471 10.5492 11.7771 10.5801 11.7003C10.611 11.6234 10.6263 11.5412 10.6251 11.4584V7.29171C10.6263 7.20806 10.6107 7.12501 10.5792 7.0475C10.5477 6.96999 10.501 6.89959 10.4418 6.84047C10.3826 6.78135 10.3121 6.73472 10.2346 6.70333C10.157 6.67195 10.074 6.65645 9.99033 6.65776ZM10.0001 13.3334C9.77909 13.3334 9.56712 13.4212 9.41084 13.5775C9.25456 13.7337 9.16677 13.9457 9.16677 14.1667C9.16677 14.3877 9.25456 14.5997 9.41084 14.756C9.56712 14.9122 9.77909 15 10.0001 15C10.2211 15 10.4331 14.9122 10.5894 14.756C10.7456 14.5997 10.8334 14.3877 10.8334 14.1667C10.8334 13.9457 10.7456 13.7337 10.5894 13.5775C10.4331 13.4212 10.2211 13.3334 10.0001 13.3334Z"
-                  fill="#E84045"
-                />
-              </svg>
-              <span className="truncate" title="Incident Escalation Rate">
-                Incident Escalation Rate
-              </span>
-            </div>
-            <div className="flex gap-2 w-1/2 justify-end">
-              <span className="font-semibold text-sl text-white">10%</span>
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 28 28"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  width="28"
-                  height="28"
-                  rx="14"
-                  fill="#40E5D1"
-                  fillOpacity="0.4"
-                />
-                <path
-                  d="M18.4987 15.3889L13.9987 19.8334M13.9987 19.8334L9.49866 15.3889M13.9987 19.8334V8.16671"
-                  stroke="#40E5D1"
                   strokeWidth="2"
                   strokeLinecap="square"
                 />

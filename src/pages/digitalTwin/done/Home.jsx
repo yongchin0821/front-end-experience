@@ -31,7 +31,7 @@ export function Home() {
         </div>
       </div>
 
-      <div className="footer min-h-24">footer</div>
+      <div className="footer min-h-10">footer</div>
     </div>
   );
 }

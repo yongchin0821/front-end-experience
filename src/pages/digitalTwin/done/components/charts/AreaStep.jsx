@@ -61,7 +61,7 @@ export default function ImgFloor() {
       className="custom-spotlight-card"
       spotlightColor="rgba(0, 229, 255, 0.2)"
     >
-      <div className="flex flex-col justify-between pt-4 pb-4 rounded-3xl  w-[500px] h-[350px] overflow-hidden">
+      <div className="flex flex-col justify-between pt-4 pb-4 rounded-3xl  h-full overflow-hidden">
         <div className="flex w-full pl-8 pr-8 gap-14 mb-4">
           <div className="flex gap-2 items-center">
             <div className="w-4 h-4 bg-[#5B14C5]" />

@@ -27,8 +27,8 @@ export default function ImgFloor() {
       className="custom-spotlight-card"
       spotlightColor="rgba(0, 229, 255, 0.2)"
     >
-      <div className="flex flex-col pt-4 pb-4  rounded-3xl w-[500px] h-[560px] overflow-hidden">
-        <div className="pb-8"></div>
+      <div className="flex flex-col h-full pt-2 pb-2 text-xs">
+        <div className="pb-4"></div>
         <FunnelChart
           id="layered"
           height={330}
@@ -57,20 +57,20 @@ export default function ImgFloor() {
             />
           }
         />
-        <div className="flex w-full pl-8 pr-8 justify-between pb-2 pt-3">
+        <div className="flex w-full pl-2 pr-2 justify-between pb-2 pt-3">
           <div className="flex flex-col gap-2 w-1/2">
-            <span className="text-xl">Critical Incidents</span>
+            <span className="text-xs">Critical Incidents</span>
             <div className="flex items-center gap-2">
               <Count
-                className="font-mono text-4xl font-semibold"
+                className="font-mono text-xl font-semibold"
                 from={0}
                 to={321}
               />
               <div className="flex bg-[rgb(232,64,69)]/40 p-1 pl-2 pr-2 items-center rounded-full text-[#F08083]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="21"
+                  width="10"
+                  height="11"
                   viewBox="0 0 20 21"
                   fill="none"
                 >
@@ -84,23 +84,23 @@ export default function ImgFloor() {
                 12%
               </div>
             </div>
-            <span className="text-[#9A9AAF] text-sm">
+            <span className="text-[#9A9AAF] text-xs">
               Compared to 293 last week
             </span>
           </div>
           <div className="flex flex-col gap-2 w-1/2">
-            <span className="text-xl">Total Incidents</span>
+            <span className="text-xs">Total Incidents</span>
             <div className="flex items-center gap-2">
               <Count
-                className="font-mono text-4xl font-semibold"
+                className="font-mono text-xl font-semibold"
                 from={0}
                 to={1120}
               />
               <div className="flex bg-[rgb(64,229,209)]/40 p-1 pl-2 pr-2 items-center rounded-full text-[#40E5D1]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="21"
+                  width="10"
+                  height="11"
                   viewBox="0 0 20 21"
                   fill="none"
                 >
@@ -114,7 +114,7 @@ export default function ImgFloor() {
                 4%
               </div>
             </div>
-            <span className="text-[#9A9AAF] text-sm">
+            <span className="text-[#9A9AAF] text-xs">
               Compared to 1.06k last week
             </span>
           </div>

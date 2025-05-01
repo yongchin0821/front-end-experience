@@ -60,8 +60,8 @@ export default function ImgFloor() {
       className="custom-spotlight-card"
       spotlightColor="rgba(0, 229, 255, 0.2)"
     >
-      <div className="flex flex-col justify-between pt-4 pb-4 rounded-3xl  w-[500px] h-[350px] overflow-hidden">
-      <div className="pb-8"></div>
+      <div className="flex flex-col justify-between pt-4 pb-4 rounded-3xl  h-full">
+      <div className="pb-2"></div>
 
         <div className={"flex-grow px-4"}>
           <StackedBarChart

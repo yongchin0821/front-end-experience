@@ -22,7 +22,7 @@ const SpotlightCard = ({
     <div
       ref={divRef}
       onMouseMove={handleMouseMove}
-      className={`${styles["card-spotlight"]} ${className} m-2 p-6`}
+      className={`${styles["card-spotlight"]} ${className} m-2 p-4`}
     >
       <div
         style={{

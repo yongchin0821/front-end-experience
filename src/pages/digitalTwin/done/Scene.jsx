@@ -1,7 +1,5 @@
 import { Center } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import gsap from "gsap";
-import { useAtom } from "jotai";
 import { useControls } from "leva";
 import React, {
   memo,
@@ -13,6 +11,7 @@ import React, {
 } from "react";
 import * as THREE from "three";
 import ImgFloor from "./components/ImgFloor";
+import MarkedLightPillar from "./components/useMapMarkedLightPillar";
 
 // 常量抽离
 const CENTER_LNG = 110;
@@ -126,7 +125,6 @@ const ChinaMap = ({ geoData }) => {
     const region = geoData[randomIndex];
 
     const center1 = calculateShapeCenter(region.geometry.coordinates);
-
     // 动画逻辑可在此处添加（原代码中未完全实现）
   }, [geoData]);
 
@@ -143,11 +141,17 @@ const ChinaMap = ({ geoData }) => {
   return (
     <group name="chinaMapGroup">
       {geoData.map((feature, index) => (
-        <MapShape
-          key={feature.properties.adcode || index}
-          feature={feature}
-          index={index}
-        />
+        <>
+          <MapShape
+            key={feature.properties.adcode || index}
+            feature={feature}
+            index={index}
+          />
+          <MarkedLightPillar
+            lon={feature.properties.center[0]}
+            lat={feature.properties.center[1]}
+          />
+        </>
       ))}
     </group>
   );

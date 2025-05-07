@@ -26,8 +26,8 @@ export default function ImgFloor() {
         { key: new Date("04/04/2025"), data: 2 },
         { key: new Date("04/05/2025"), data: 5 },
         { key: new Date("04/06/2025"), data: 8 },
-        { key: new Date("04/07/2025"), data: 4 }
-      ]
+        { key: new Date("04/07/2025"), data: 4 },
+      ],
     },
     {
       key: "Discovery",
@@ -38,8 +38,8 @@ export default function ImgFloor() {
         { key: new Date("04/04/2025"), data: 4 },
         { key: new Date("04/05/2025"), data: 7 },
         { key: new Date("04/06/2025"), data: 3 },
-        { key: new Date("04/07/2025"), data: 9 }
-      ]
+        { key: new Date("04/07/2025"), data: 9 },
+      ],
     },
     // {
     //   key: "Execution",
@@ -53,13 +53,13 @@ export default function ImgFloor() {
     //     { key: new Date("04/07/2025"), data: 7 }
     //   ]
     // }
-  ]
-  
+  ];
 
   return (
     <SpotlightCard
       className="custom-spotlight-card"
       spotlightColor="rgba(0, 229, 255, 0.2)"
+      title="全国全年经济情况"
     >
       <div className="flex flex-col justify-between pt-4 pb-4 rounded-3xl  h-full overflow-hidden">
         <div className="flex w-full pl-8 pr-8 gap-14 mb-4">

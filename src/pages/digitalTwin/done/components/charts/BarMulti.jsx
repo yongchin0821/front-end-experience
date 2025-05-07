@@ -18,39 +18,39 @@ import {
 export default function ImgFloor() {
   const multiCategorySmallBlock = [
     {
+      key: "2025/01/01",
+      data: [
+        { key: "饮食", data: 3 },
+        { key: "旅游", data: 8 },
+        { key: "建设", data: 5 },
+        { key: "科研", data: 2 },
+      ],
+    },
+    {
       key: "2025/04/01",
       data: [
-        { key: "XML", data: 3 },
-        { key: "JSON", data: 8 },
-        { key: "HTTPS", data: 5 },
-        { key: "SSH", data: 2 },
+        { key: "饮食", data: 7 },
+        { key: "旅游", data: 4 },
+        { key: "建设", data: 9 },
+        { key: "科研", data: 1 },
       ],
     },
     {
-      key: "2025/04/02",
+      key: "2025/07/01",
       data: [
-        { key: "XML", data: 7 },
-        { key: "JSON", data: 4 },
-        { key: "HTTPS", data: 9 },
-        { key: "SSH", data: 1 },
+        { key: "饮食", data: 6 },
+        { key: "旅游", data: 3 },
+        { key: "建设", data: 10 },
+        { key: "科研", data: 4 },
       ],
     },
     {
-      key: "2025/04/03",
+      key: "2025/10/01",
       data: [
-        { key: "XML", data: 6 },
-        { key: "JSON", data: 3 },
-        { key: "HTTPS", data: 10 },
-        { key: "SSH", data: 4 },
-      ],
-    },
-    {
-      key: "2025/04/04",
-      data: [
-        { key: "XML", data: 3 },
-        { key: "JSON", data: 1 },
-        { key: "HTTPS", data: 5 },
-        { key: "SSH", data: 7 },
+        { key: "饮食", data: 3 },
+        { key: "旅游", data: 1 },
+        { key: "建设", data: 5 },
+        { key: "科研", data: 7 },
       ],
     },
   ];
@@ -59,24 +59,25 @@ export default function ImgFloor() {
     <SpotlightCard
       className="custom-spotlight-card"
       spotlightColor="rgba(0, 229, 255, 0.2)"
+      title='全国季度增长情况'
     >
       <div className="flex flex-col justify-between pt-4 pb-4 rounded-3xl  h-full">
         <div className="flex justify-between w-full pl-8 pr-8 mb-4">
           <div className="flex gap-2 items-center">
             <div className="w-4 h-4 bg-[#DAC5F9]" />
-            <span className="text-[#9A9AAF] text-xs">XML</span>
+            <span className="text-[#9A9AAF] text-xs">饮食</span>
           </div>
           <div className="flex gap-2 items-center">
             <div className="w-4 h-4 bg-[#40E5D1]" />
-            <span className="text-[#9A9AAF] text-xs">JSON</span>
+            <span className="text-[#9A9AAF] text-xs">旅游</span>
           </div>
           <div className="flex gap-2 items-center">
             <div className="w-4 h-4 bg-[#9152EE]" />
-            <span className="text-[#9A9AAF] text-xs">HTTPS</span>
+            <span className="text-[#9A9AAF] text-xs">建设</span>
           </div>
           <div className="flex gap-2 items-center">
             <div className="w-4 h-4 bg-[#5B14C5]" />
-            <span className="text-[#9A9AAF] text-xs">SSH</span>
+            <span className="text-[#9A9AAF] text-xs">科研</span>
           </div>
         </div>
         <BarChart

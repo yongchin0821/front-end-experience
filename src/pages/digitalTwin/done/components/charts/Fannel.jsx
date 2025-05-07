@@ -26,6 +26,7 @@ export default function ImgFloor() {
     <SpotlightCard
       className="custom-spotlight-card"
       spotlightColor="rgba(0, 229, 255, 0.2)"
+      title="2025年经济分析"
     >
       <div className="flex flex-col h-full pt-2 pb-2 text-xs">
         <div className="pb-4"></div>

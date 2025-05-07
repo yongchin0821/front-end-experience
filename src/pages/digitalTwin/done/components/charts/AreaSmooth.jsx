@@ -59,20 +59,21 @@ export default function ImgFloor() {
     <SpotlightCard
       className="custom-spotlight-card"
       spotlightColor="rgba(0, 229, 255, 0.2)"
+      title="今年经济情况"
     >
       <div className="flex flex-col justify-between pt-4 pb-4 rounded-3xl h-full overflow-hidden">
         <div className="flex gap-8 w-full pl-8 pr-8 mb-4">
           <div className="flex gap-2 items-center">
             <div className="w-4 h-4 bg-[#5B14C5]" />
-            <span className="text-[#9A9AAF] text-xs">DLP</span>
+            <span className="text-[#9A9AAF] text-xs">消费</span>
           </div>
           <div className="flex gap-2 items-center">
             <div className="w-4 h-4 bg-[#DAC5F9]" />
-            <span className="text-[#9A9AAF] text-xs">Threat Intel</span>
+            <span className="text-[#9A9AAF] text-xs">生产</span>
           </div>
           <div className="flex gap-2 items-center">
             <div className="w-4 h-4 bg-[#B58BF3]" />
-            <span className="text-[#9A9AAF] text-xs">SysLog</span>
+            <span className="text-[#9A9AAF] text-xs">科研</span>
           </div>
         </div>
 

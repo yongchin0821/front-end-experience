@@ -5,6 +5,7 @@ const SpotlightCard = ({
   children,
   className = "",
   spotlightColor = "rgba(255, 255, 255, 0.1)",
+  title = "",
 }) => {
   const divRef = useRef(null);
 
@@ -31,7 +32,7 @@ const SpotlightCard = ({
         }}
         className="text-sl pl-20 font-bold text-white"
       >
-        <div className={`${styles.diyfont}`}>数字平台</div>
+        <div className={`${styles.diyfont}`}>{title}</div>
       </div>
       {children}
     </div>

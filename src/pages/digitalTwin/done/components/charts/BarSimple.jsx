@@ -19,17 +19,18 @@ import { motion } from "motion/react";
 
 export default function ImgFloor() {
   const labelsData = [
-    { key: "DLP", data: 10 },
-    { key: "SIEM", data: 2 },
-    { key: "Endpoint", data: 7 },
-    { key: "DLP2", data: 9 },
-    { key: "SIEM2", data: 2 },
-    { key: "Endpoint2", data: 7 },
+    { key: "农业", data: 10 },
+    { key: "能源", data: 2 },
+    { key: "金属", data: 7 },
+    { key: "化工", data: 9 },
+    { key: "建设", data: 2 },
+    { key: "餐饮", data: 7 },
   ];
   return (
     <SpotlightCard
       className="custom-spotlight-card"
       spotlightColor="rgba(0, 229, 255, 0.2)"
+      title="全国商品分类销售"
     >
       <div className="flex flex-col pt-4 h-full text-xs">
         <div className="pb-4"></div>
@@ -51,7 +52,7 @@ export default function ImgFloor() {
                     <LinearXAxisTickLabel
                       padding={10}
                       rotation={-45}
-                      format={(text) => `${text.slice(0, 5)}...`}
+                      format={(text) => `${text.slice(0, 5)}`}
                     />
                   }
                   tickSize={30}

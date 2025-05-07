@@ -18,7 +18,7 @@ import {
 export default function ImgFloor() {
   const multiCategory = [
     {
-      key: "2025/04/01",
+      key: "一季度",
       data: [
         { key: "XML", data: 3 },
         { key: "JSON", data: 8 },
@@ -27,7 +27,7 @@ export default function ImgFloor() {
       ],
     },
     {
-      key: "2025/04/02",
+      key: "二季度",
       data: [
         { key: "XML", data: 7 },
         { key: "JSON", data: 4 },
@@ -36,7 +36,7 @@ export default function ImgFloor() {
       ],
     },
     {
-      key: "2025/04/03",
+      key: "三季度",
       data: [
         { key: "XML", data: 6 },
         { key: "JSON", data: 3 },
@@ -45,7 +45,7 @@ export default function ImgFloor() {
       ],
     },
     {
-      key: "2025/04/04",
+      key: "四季度",
       data: [
         { key: "XML", data: 3 },
         { key: "JSON", data: 1 },
@@ -59,9 +59,10 @@ export default function ImgFloor() {
     <SpotlightCard
       className="custom-spotlight-card"
       spotlightColor="rgba(0, 229, 255, 0.2)"
+      title="今年消费占比"
     >
       <div className="flex flex-col justify-between pt-4 pb-4 rounded-3xl  h-full">
-      <div className="pb-2"></div>
+        <div className="pb-2"></div>
 
         <div className={"flex-grow px-4"}>
           <StackedBarChart
@@ -74,7 +75,7 @@ export default function ImgFloor() {
                   <LinearYAxisTickSeries
                     label={
                       <LinearYAxisTickLabel
-                        format={(text) => `${text.slice(0, 5)}...`}
+                        format={(text) => `${text.slice(0, 5)}`}
                       />
                     }
                   />

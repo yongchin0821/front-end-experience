@@ -90,8 +90,8 @@ const MapShape = memo(({ feature, index }) => {
           // color={"#ff6b6b"}
           metalness={0.1}
           roughness={0.5}
-          opacity={1}
-          // transparent
+          opacity={0.9}
+          transparent
         />
       </mesh>
       <lineSegments geometry={edges}>
@@ -130,6 +130,8 @@ const ChinaMap = ({ geoData }) => {
 
   useFrame((state) => {
     const nowSecond = Math.floor(state.clock.elapsedTime);
+    // console.log(state);
+    state.camera.updateProjectionMatrix();
     if (nowSecond !== currentSecond) {
       currentSecond = nowSecond;
       if (!(currentSecond % 4)) {
@@ -141,17 +143,14 @@ const ChinaMap = ({ geoData }) => {
   return (
     <group name="chinaMapGroup">
       {geoData.map((feature, index) => (
-        <>
-          <MapShape
-            key={feature.properties.adcode || index}
-            feature={feature}
-            index={index}
-          />
+        <group key={feature.properties.adcode || index}>
+          <MapShape feature={feature} index={index} />
           <MarkedLightPillar
-            lon={feature.properties.center[0]}
-            lat={feature.properties.center[1]}
+            lon={feature.properties.center[0] - CENTER_LNG}
+            lat={feature.properties.center[1] - CENTER_LAT}
+            heightScaleFactor={3}
           />
-        </>
+        </group>
       ))}
     </group>
   );

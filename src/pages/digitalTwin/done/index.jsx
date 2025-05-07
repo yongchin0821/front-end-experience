@@ -8,13 +8,13 @@ function App() {
   return (
     <>
       <Canvas className={styles.webgl}>
-        <group scale={0.09}>
+        <group rotation={[-0.35, 0, 0]} scale={0.09}>
           <Scene />
         </group>
         <directionalLight position={[1, 1, 0]} />
         <ambientLight color={"0x404040"} intensity={3} />
         <axesHelper args={[5]} />
-        <OrbitControls enablePan enableZoom enableRotate />
+        <OrbitControls enablePan enableRotate />
       </Canvas>
       <Home />
     </>

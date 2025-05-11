@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+.webgl  {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  outline: none;
+  font-family: Nunito Sans, sans-serif
+}
+
+/* body {
+  margin: 0;
+} */

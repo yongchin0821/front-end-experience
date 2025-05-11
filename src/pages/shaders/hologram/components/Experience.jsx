@@ -23,7 +23,6 @@ export const Experience = () => {
       coinRef.current.rotation.x = -elapsedTime * 0.1;
       coinRef.current.rotation.y = elapsedTime * 0.2;
     }
-
   });
   return (
     <>

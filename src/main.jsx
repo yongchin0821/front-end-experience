@@ -39,8 +39,8 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import Home from "./pages/home/index";
+import Startup from "./pages/startup/index";
 import Slideshow from "./pages/SlideShow/index";
-import Prod from "./pages/prod/index";
 import Dissolve from "./pages/shaders/dissolve/index";
 import Hologram from "./pages/shaders/hologram/index";
 import Morphing from "./pages/shaders/morphing/index";
@@ -52,12 +52,12 @@ const router = createBrowserRouter([
     Component: Home,
   },
   {
-    path: "/slideshow",
-    Component: Slideshow,
+    path: "/startup",
+    Component: Startup,
   },
   {
-    path: "/prod",
-    Component: Prod,
+    path: "/slideshow",
+    Component: Slideshow,
   },
   {
     path: "/shaders/dissolve",

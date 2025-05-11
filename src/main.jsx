@@ -44,6 +44,7 @@ import Slideshow from "./pages/SlideShow/index";
 import Dissolve from "./pages/shaders/dissolve/index";
 import Hologram from "./pages/shaders/hologram/index";
 import Morphing from "./pages/shaders/morphing/index";
+import ParticleLoop from "./pages/shaders/particleLoop/index";
 import Done from "./pages/digitalTwin/done/index";
 
 const router = createBrowserRouter([
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
   {
     path: "/shaders/morphing",
     Component: Morphing,
+  },
+  {
+    path: "/shaders/particleLoop",
+    Component: ParticleLoop,
   },
   {
     path: "/digitaltwin/done",

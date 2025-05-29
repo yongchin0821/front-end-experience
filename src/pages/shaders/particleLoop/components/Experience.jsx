@@ -1,150 +1,194 @@
-// components/Experience.jsx
-import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
+import { useRef, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useFBO } from "@react-three/drei";
-import testVertexShader from "./shaders/vertexParticles.glsl";
-import testFragmentShader from "./shaders/fragment.glsl";
-import simVertex from "./shaders/simVertex.glsl";
+import fragment from "./shaders/fragment.glsl";
+import vertex from "./shaders/vertexParticles.glsl";
 import simFragment from "./shaders/simFragment.glsl";
+import simVertex from "./shaders/simVertex.glsl";
+
+const size = 256;
 
 export function Experience() {
-  const { gl, size, camera } = useThree();
-  // 分辨率
-  const WIDTH = size.width;
-  const HEIGHT = size.height;
-  const TEX_SIZE = 128; // FBO texture 大小
+  const { gl, scene, camera } = useThree();
+  const time = useRef(0);
 
-  // 两个 FBO 交替用作 ping-pong
-  const fboA = useFBO(TEX_SIZE, TEX_SIZE, {
+  // ### FBO 设置
+  let fbo = useFBO(size, size, {
     minFilter: THREE.NearestFilter,
     magFilter: THREE.NearestFilter,
-    type: THREE.FloatType,
     format: THREE.RGBAFormat,
+    type: THREE.FloatType,
   });
-  const fboB = useFBO(TEX_SIZE, TEX_SIZE, {
+  let fbo1 = useFBO(size, size, {
     minFilter: THREE.NearestFilter,
     magFilter: THREE.NearestFilter,
-    type: THREE.FloatType,
     format: THREE.RGBAFormat,
+    type: THREE.FloatType,
   });
-  const ping = useRef(fboA);
-  const pong = useRef(fboB);
 
-  // Orthographic 相机 & 全屏 quad
-  const simCam = useRef(new THREE.OrthographicCamera(-1, 1, 1, -1, -1, 1));
-  const simScene = useRef(new THREE.Scene());
-  const simGeo = useRef(new THREE.PlaneGeometry(2, 2));
-  const simMat = useRef(
-    new THREE.ShaderMaterial({
-      uniforms: {
-        uPositions: { value: null },
-        uTime: { value: 0 },
-      },
-      vertexShader: simVertex,
-      fragmentShader: simFragment,
-    })
+  // ### FBO 场景和相机
+  const fboScene = new THREE.Scene();
+  const fboCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, -1, 1);
+  fboCamera.position.set(0, 0, 0.5);
+  fboCamera.lookAt(0, 0, 0);
+
+  const fboGeometry = new THREE.PlaneGeometry(2, 2);
+
+  // ### 数据纹理初始化
+  const data = new Float32Array(size * size * 4);
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
+      const index = (i + j * size) * 4;
+      const theta = Math.random() * Math.PI * 2;
+      const r = 0.5 + Math.random() * 0.5;
+      data[index + 0] = r * Math.cos(theta);
+      data[index + 1] = r * Math.sin(theta);
+      data[index + 2] = 1;
+      data[index + 3] = 1;
+    }
+  }
+
+  const fboTexture = new THREE.DataTexture(
+    data,
+    size,
+    size,
+    THREE.RGBAFormat,
+    THREE.FloatType
   );
-  const simMesh = useRef(new THREE.Mesh(simGeo.current, simMat.current));
+  fboTexture.magFilter = THREE.NearestFilter;
+  fboTexture.minFilter = THREE.NearestFilter;
+  fboTexture.needsUpdate = true;
 
-  // 粒子点云
-  const pointsGeo = useRef(new THREE.BufferGeometry());
-  const pointsMat = useRef(
-    new THREE.ShaderMaterial({
-      vertexShader: testVertexShader,
-      fragmentShader: testFragmentShader,
-      transparent: true,
-      side: THREE.DoubleSide,
-      uniforms: {
-        uTime: { value: 0 },
-        uPositions: { value: null },
-        resolution: { value: new THREE.Vector4(WIDTH, HEIGHT, 1, 1) },
-      },
-    })
+  // ### Info 纹理
+  const infoArray = new Float32Array(size * size * 4);
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
+      const index = (i + j * size) * 4;
+      infoArray[index + 0] = 0.5 + Math.random();
+      infoArray[index + 1] = 0.5 + Math.random();
+      infoArray[index + 2] = 1;
+      infoArray[index + 3] = 1;
+    }
+  }
+
+  const infoTexture = new THREE.DataTexture(
+    infoArray,
+    size,
+    size,
+    THREE.RGBAFormat,
+    THREE.FloatType
   );
-  const points = useRef(new THREE.Points(pointsGeo.current, pointsMat.current));
+  infoTexture.magFilter = THREE.NearestFilter;
+  infoTexture.minFilter = THREE.NearestFilter;
+  infoTexture.needsUpdate = true;
 
-  // 初始化
+  // ### FBO 材质
+  const fboMaterial = new THREE.ShaderMaterial({
+    uniforms: {
+      uPositions: { value: fboTexture },
+      uInfo: { value: infoTexture },
+      uMouse: { value: new THREE.Vector2(0, 0) },
+      uTime: { value: 0 },
+    },
+    vertexShader: simVertex,
+    fragmentShader: simFragment,
+  });
+
+  const fboMesh = new THREE.Mesh(fboGeometry, fboMaterial);
+
   useEffect(() => {
-    // 1. 构造初始随机位置数据纹理
-    const data = new Float32Array(TEX_SIZE * TEX_SIZE * 4);
-    for (let i = 0; i < TEX_SIZE; i++) {
-      for (let j = 0; j < TEX_SIZE; j++) {
-        const idx = (i + j * TEX_SIZE) * 4;
-        const theta = Math.random() * Math.PI * 2;
-        const r = 0.5 + Math.random() * 0.5;
-        data[idx + 0] = Math.cos(theta) * r;
-        data[idx + 1] = Math.sin(theta) * r;
-        data[idx + 2] = 1;
-        data[idx + 3] = 1;
-      }
+    fboScene.add(fboMesh);
+  }, [fboMesh]);
+
+  // ### 粒子几何体
+  const count = size * size;
+  const geometry = new THREE.BufferGeometry();
+  const positions = new Float32Array(count * 3);
+  const uv = new Float32Array(count * 2);
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
+      const index = i + j * size;
+      positions[index * 3 + 0] = Math.random();
+      positions[index * 3 + 1] = Math.random();
+      positions[index * 3 + 2] = 0;
+      uv[index * 2 + 0] = i / size;
+      uv[index * 2 + 1] = j / size;
     }
-    const dataTex = new THREE.DataTexture(
-      data,
-      TEX_SIZE,
-      TEX_SIZE,
-      THREE.RGBAFormat,
-      THREE.FloatType
-    );
-    dataTex.needsUpdate = true;
-    dataTex.magFilter = THREE.NearestFilter;
-    dataTex.minFilter = THREE.NearestFilter;
+  }
+  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute("uv", new THREE.BufferAttribute(uv, 2));
 
-    // 把初始状态渲染两次填满 ping & pong
-    simMat.current.uniforms.uPositions.value = dataTex;
-    gl.setRenderTarget(ping.current);
-    gl.render(simScene.current.add(simMesh.current), simCam.current);
-    gl.setRenderTarget(pong.current);
-    gl.render(simScene.current, simCam.current);
-    gl.setRenderTarget(null);
+  // ### 粒子材质
+  const material = new THREE.ShaderMaterial({
+    vertexShader: vertex,
+    fragmentShader: fragment,
+    transparent: true,
+    uniforms: {
+      uTime: { value: 0 },
+      uPositions: { value: fboTexture },
+      resolution: { value: new THREE.Vector4() },
+    },
+    side: THREE.DoubleSide,
+  });
 
-    // 构建粒子 Geometry + UV
-    const count = TEX_SIZE * TEX_SIZE;
-    const posArr = new Float32Array(count * 3);
-    const uvArr = new Float32Array(count * 2);
-    let ptr = 0;
-    for (let i = 0; i < TEX_SIZE; i++) {
-      for (let j = 0; j < TEX_SIZE; j++) {
-        posArr[ptr * 3 + 0] = Math.random();
-        posArr[ptr * 3 + 1] = Math.random();
-        posArr[ptr * 3 + 2] = 0;
-        uvArr[ptr * 2 + 0] = i / TEX_SIZE;
-        uvArr[ptr * 2 + 1] = j / TEX_SIZE;
-        ptr++;
-      }
-    }
-    pointsGeo.current.setAttribute(
-      "position",
-      new THREE.BufferAttribute(posArr, 3)
-    );
-    pointsGeo.current.setAttribute("uv", new THREE.BufferAttribute(uvArr, 2));
-    pointsMat.current.uniforms.uPositions.value = dataTex; // 临时，首次渲染
-  }, [gl]);
+  const points = new THREE.Points(geometry, material);
 
-  // 每帧更新
-  useFrame(({ clock }) => {
-    const t = clock.getElapsedTime();
-    // 1. 模拟步进
-    simMat.current.uniforms.uTime.value = t;
-    simMat.current.uniforms.uPositions.value = pong.current.texture;
-    gl.setRenderTarget(ping.current);
-    gl.render(simScene.current, simCam.current);
+  useEffect(() => {
+    scene.add(points);
+  }, [points, scene]);
 
-    // 2. 渲染粒子到屏幕
-    pointsMat.current.uniforms.uTime.value = t;
-    pointsMat.current.uniforms.uPositions.value = ping.current.texture;
-    gl.setRenderTarget(null);
-    gl.render(points.current, camera);
-
-    // 3. swap ping/pong
-    [ping.current, pong.current] = [pong.current, ping.current];
-  }, 1); // 优先级 1 保证在 Drei 的自动渲染之前
-
-  return (
-    <>
-      {/* 我们自己手动 gl.render，R3F 默认 Scene 里无需挂载任何 Mesh */}
-      {/* 但为了让 orbitControls 与 Camera 正常工作，需返回一个空组 */}
-      {/* <group /> */}
-    </>
+  // ### 光线投射
+  const raycaster = useRef(new THREE.Raycaster());
+  const pointer = useRef(new THREE.Vector2());
+  const dummy = useRef(
+    new THREE.Mesh(
+      new THREE.PlaneGeometry(100, 100),
+      new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.DoubleSide })
+    )
   );
+
+  useEffect(() => {
+    scene.add(dummy.current);
+    const handlePointerMove = (event) => {
+      pointer.current.x = (event.clientX / window.innerWidth) * 2 - 1;
+      pointer.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      raycaster.current.setFromCamera(pointer.current, camera);
+      const intersects = raycaster.current.intersectObject(dummy.current);
+      if (intersects.length > 0) {
+        const { x, y } = intersects[0].point;
+        fboMaterial.uniforms.uMouse.value.set(x, y);
+      }
+    };
+    window.addEventListener("pointermove", handlePointerMove);
+    return () => window.removeEventListener("pointermove", handlePointerMove);
+  }, [camera, scene]);
+
+  // ### 动画循环
+  useFrame((state) => {
+    const { clock } = state;
+    const elapsedTime = clock.getElapsedTime();
+    time.current += 0.01;
+
+    // 更新 uniforms
+    material.uniforms.uTime.value = elapsedTime;
+    fboMaterial.uniforms.uTime.value = elapsedTime;
+
+    // 更新 FBO 纹理
+    fboMaterial.uniforms.uPositions.value = fbo1.texture;
+    material.uniforms.uPositions.value = fbo.texture;
+
+    // 渲染 FBO
+    gl.setRenderTarget(fbo);
+    gl.render(fboScene, fboCamera);
+
+    // 渲染主场景
+    gl.setRenderTarget(null);
+    gl.render(scene, camera);
+
+    // 交换 FBO
+    [fbo, fbo1] = [fbo1, fbo];
+  });
+
+  return null;
 }

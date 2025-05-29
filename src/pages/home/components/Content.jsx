@@ -15,7 +15,7 @@ export function Content() {
   const items_list_map = [
     ["数据治理平台", "数字大屏", "yongchin's blog"],
     ["Slide Show"],
-    ["hologram", "morphing", "dissolve"],
+    ["hologram", "morphing", "dissolve", "particles loop"],
   ];
 
   const [items_list, setItem] = useState([
@@ -38,6 +38,7 @@ export function Content() {
     hologram: "https://frontend.yongchin.cn/shaders/hologram",
     morphing: "https://frontend.yongchin.cn/shaders/morphing",
     dissolve: "https://frontend.yongchin.cn/shaders/dissolve",
+    "particles loop": "https://frontend.yongchin.cn/shaders/dissolve",
   };
   const openWindow = (item, index) => {
     if (address[item]) {

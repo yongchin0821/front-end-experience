@@ -38,7 +38,7 @@ export function Content() {
     hologram: "https://frontend.yongchin.cn/shaders/hologram",
     morphing: "https://frontend.yongchin.cn/shaders/morphing",
     dissolve: "https://frontend.yongchin.cn/shaders/dissolve",
-    "particles loop": "https://frontend.yongchin.cn/shaders/dissolve",
+    "particles loop": "https://frontend.yongchin.cn/shaders/particleLoop",
   };
   const openWindow = (item, index) => {
     if (address[item]) {

@@ -1,5 +1,5 @@
 import { Center } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { useControls } from "leva";
 import React, {
   memo,
@@ -12,6 +12,7 @@ import React, {
 import * as THREE from "three";
 import ImgFloor from "./components/ImgFloor";
 import MarkedLightPillar from "./components/useMapMarkedLightPillar";
+import { use } from "react";
 
 // 常量抽离
 const CENTER_LNG = 110;

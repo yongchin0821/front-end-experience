@@ -1,6 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { ContactShadows, Environment, OrbitControls } from "@react-three/drei";
 import { Experience } from "./components/Experience";
+import { Content } from "./components/Content";
 import "./index.css";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <OrbitControls />
         <Experience />
       </Canvas>
+      <Content></Content>
     </>
   );
 }

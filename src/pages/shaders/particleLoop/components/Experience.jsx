@@ -1,194 +1,196 @@
-import * as THREE from "three";
-import { useRef, useEffect } from "react";
+// src/components/Experience.jsx
+import { useEffect, useMemo, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useFBO } from "@react-three/drei";
-import fragment from "./shaders/fragment.glsl";
-import vertex from "./shaders/vertexParticles.glsl";
-import simFragment from "./shaders/simFragment.glsl";
-import simVertex from "./shaders/simVertex.glsl";
+import * as THREE from "three";
 
-const size = 256;
+// 着色器直接按原路径引入（vite 会把 .glsl 作为字符串）
+import simVertex from "./shaders/simVertex.glsl";
+import simFragment from "./shaders/simFragment.glsl";
+import vertParticles from "./shaders/vertexParticles.glsl";
+import fragParticles from "./shaders/fragment.glsl";
+
+const SIZE = 256; // 粒子分辨率 => SIZE² 颗粒
 
 export function Experience() {
-  const { gl, scene, camera } = useThree();
-  const time = useRef(0);
+  const { gl, camera } = useThree();
 
-  // ### FBO 设置
-  let fbo = useFBO(size, size, {
-    minFilter: THREE.NearestFilter,
-    magFilter: THREE.NearestFilter,
-    format: THREE.RGBAFormat,
-    type: THREE.FloatType,
-  });
-  let fbo1 = useFBO(size, size, {
-    minFilter: THREE.NearestFilter,
-    magFilter: THREE.NearestFilter,
-    format: THREE.RGBAFormat,
-    type: THREE.FloatType,
-  });
-
-  // ### FBO 场景和相机
-  const fboScene = new THREE.Scene();
-  const fboCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, -1, 1);
-  fboCamera.position.set(0, 0, 0.5);
-  fboCamera.lookAt(0, 0, 0);
-
-  const fboGeometry = new THREE.PlaneGeometry(2, 2);
-
-  // ### 数据纹理初始化
-  const data = new Float32Array(size * size * 4);
-  for (let i = 0; i < size; i++) {
-    for (let j = 0; j < size; j++) {
-      const index = (i + j * size) * 4;
-      const theta = Math.random() * Math.PI * 2;
-      const r = 0.5 + Math.random() * 0.5;
-      data[index + 0] = r * Math.cos(theta);
-      data[index + 1] = r * Math.sin(theta);
-      data[index + 2] = 1;
-      data[index + 3] = 1;
-    }
-  }
-
-  const fboTexture = new THREE.DataTexture(
-    data,
-    size,
-    size,
-    THREE.RGBAFormat,
-    THREE.FloatType
-  );
-  fboTexture.magFilter = THREE.NearestFilter;
-  fboTexture.minFilter = THREE.NearestFilter;
-  fboTexture.needsUpdate = true;
-
-  // ### Info 纹理
-  const infoArray = new Float32Array(size * size * 4);
-  for (let i = 0; i < size; i++) {
-    for (let j = 0; j < size; j++) {
-      const index = (i + j * size) * 4;
-      infoArray[index + 0] = 0.5 + Math.random();
-      infoArray[index + 1] = 0.5 + Math.random();
-      infoArray[index + 2] = 1;
-      infoArray[index + 3] = 1;
-    }
-  }
-
-  const infoTexture = new THREE.DataTexture(
-    infoArray,
-    size,
-    size,
-    THREE.RGBAFormat,
-    THREE.FloatType
-  );
-  infoTexture.magFilter = THREE.NearestFilter;
-  infoTexture.minFilter = THREE.NearestFilter;
-  infoTexture.needsUpdate = true;
-
-  // ### FBO 材质
-  const fboMaterial = new THREE.ShaderMaterial({
-    uniforms: {
-      uPositions: { value: fboTexture },
-      uInfo: { value: infoTexture },
-      uMouse: { value: new THREE.Vector2(0, 0) },
-      uTime: { value: 0 },
-    },
-    vertexShader: simVertex,
-    fragmentShader: simFragment,
-  });
-
-  const fboMesh = new THREE.Mesh(fboGeometry, fboMaterial);
-
-  useEffect(() => {
-    fboScene.add(fboMesh);
-  }, [fboMesh]);
-
-  // ### 粒子几何体
-  const count = size * size;
-  const geometry = new THREE.BufferGeometry();
-  const positions = new Float32Array(count * 3);
-  const uv = new Float32Array(count * 2);
-  for (let i = 0; i < size; i++) {
-    for (let j = 0; j < size; j++) {
-      const index = i + j * size;
-      positions[index * 3 + 0] = Math.random();
-      positions[index * 3 + 1] = Math.random();
-      positions[index * 3 + 2] = 0;
-      uv[index * 2 + 0] = i / size;
-      uv[index * 2 + 1] = j / size;
-    }
-  }
-  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-  geometry.setAttribute("uv", new THREE.BufferAttribute(uv, 2));
-
-  // ### 粒子材质
-  const material = new THREE.ShaderMaterial({
-    vertexShader: vertex,
-    fragmentShader: fragment,
-    transparent: true,
-    uniforms: {
-      uTime: { value: 0 },
-      uPositions: { value: fboTexture },
-      resolution: { value: new THREE.Vector4() },
-    },
-    side: THREE.DoubleSide,
-  });
-
-  const points = new THREE.Points(geometry, material);
-
-  useEffect(() => {
-    scene.add(points);
-  }, [points, scene]);
-
-  // ### 光线投射
-  const raycaster = useRef(new THREE.Raycaster());
-  const pointer = useRef(new THREE.Vector2());
-  const dummy = useRef(
-    new THREE.Mesh(
-      new THREE.PlaneGeometry(100, 100),
-      new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.DoubleSide })
-    )
-  );
-
-  useEffect(() => {
-    scene.add(dummy.current);
-    const handlePointerMove = (event) => {
-      pointer.current.x = (event.clientX / window.innerWidth) * 2 - 1;
-      pointer.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
-      raycaster.current.setFromCamera(pointer.current, camera);
-      const intersects = raycaster.current.intersectObject(dummy.current);
-      if (intersects.length > 0) {
-        const { x, y } = intersects[0].point;
-        fboMaterial.uniforms.uMouse.value.set(x, y);
+  /* ---------- 1. 预生成初始 DataTexture & infoTexture ---------- */
+  const initPositionTex = useMemo(() => {
+    const data = new Float32Array(SIZE * SIZE * 4);
+    for (let i = 0; i < SIZE; i++) {
+      for (let j = 0; j < SIZE; j++) {
+        const idx = (i + j * SIZE) * 4;
+        const theta = Math.random() * Math.PI * 2;
+        const r = 0.5 + Math.random() * 0.5;
+        data[idx] = r * Math.cos(theta);
+        data[idx + 1] = r * Math.sin(theta);
+        data[idx + 2] = 1;
+        data[idx + 3] = 1;
       }
-    };
-    window.addEventListener("pointermove", handlePointerMove);
-    return () => window.removeEventListener("pointermove", handlePointerMove);
-  }, [camera, scene]);
+    }
+    const tex = new THREE.DataTexture(
+      data,
+      SIZE,
+      SIZE,
+      THREE.RGBAFormat,
+      THREE.FloatType
+    );
+    tex.needsUpdate = true;
+    tex.magFilter = tex.minFilter = THREE.NearestFilter;
+    return tex;
+  }, []);
 
-  // ### 动画循环
-  useFrame((state) => {
-    const { clock } = state;
-    const elapsedTime = clock.getElapsedTime();
-    time.current += 0.01;
+  const infoTex = useMemo(() => {
+    const data = new Float32Array(SIZE * SIZE * 4);
+    for (let i = 0; i < SIZE; i++) {
+      for (let j = 0; j < SIZE; j++) {
+        const idx = (i + j * SIZE) * 4;
+        data[idx] = 0.5 + Math.random();
+        data[idx + 1] = 0.5 + Math.random();
+        data[idx + 2] = 1;
+        data[idx + 3] = 1;
+      }
+    }
+    const tex = new THREE.DataTexture(
+      data,
+      SIZE,
+      SIZE,
+      THREE.RGBAFormat,
+      THREE.FloatType
+    );
+    tex.needsUpdate = true;
+    tex.magFilter = tex.minFilter = THREE.NearestFilter;
+    return tex;
+  }, []);
 
-    // 更新 uniforms
-    material.uniforms.uTime.value = elapsedTime;
-    fboMaterial.uniforms.uTime.value = elapsedTime;
+  /* ---------- 2. 创建模拟场景（FBO 用） ---------- */
+  const simScene = useMemo(() => new THREE.Scene(), []);
+  const simCam = useMemo(
+    () => new THREE.OrthographicCamera(-1, 1, 1, -1, -1, 1),
+    []
+  );
 
-    // 更新 FBO 纹理
-    fboMaterial.uniforms.uPositions.value = fbo1.texture;
-    material.uniforms.uPositions.value = fbo.texture;
+  const simMat = useMemo(
+    () =>
+      new THREE.ShaderMaterial({
+        vertexShader: simVertex,
+        fragmentShader: simFragment,
+        uniforms: {
+          uPositions: { value: initPositionTex },
+          uInfo: { value: infoTex },
+          uMouse: { value: new THREE.Vector2() },
+          uTime: { value: 0 },
+        },
+      }),
+    [initPositionTex, infoTex]
+  );
 
-    // 渲染 FBO
-    gl.setRenderTarget(fbo);
-    gl.render(fboScene, fboCamera);
+  useMemo(() => {
+    const plane = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), simMat);
+    simScene.add(plane);
+  }, [simMat, simScene]);
 
-    // 渲染主场景
+  /* ---------- 3. 创建 Ping‑Pong FBO ---------- */
+  const fboA = useFBO(SIZE, SIZE, {
+    type: THREE.FloatType,
+    format: THREE.RGBAFormat,
+    magFilter: THREE.NearestFilter,
+    minFilter: THREE.NearestFilter,
+  });
+  const fboB = useFBO(SIZE, SIZE, {
+    type: THREE.FloatType,
+    format: THREE.RGBAFormat,
+    magFilter: THREE.NearestFilter,
+    minFilter: THREE.NearestFilter,
+  });
+  const swap = useRef(false); // true ⇒ 写 A 读 B；false ⇒ 写 B 读 A
+
+  // 先渲染一次，把初始位置写进两个 FBO
+  useMemo(() => {
+    gl.setRenderTarget(fboA);
+    gl.render(simScene, simCam);
+    gl.setRenderTarget(fboB);
+    gl.render(simScene, simCam);
     gl.setRenderTarget(null);
-    gl.render(scene, camera);
+  }, [gl, simScene, simCam, fboA, fboB]);
 
-    // 交换 FBO
-    [fbo, fbo1] = [fbo1, fbo];
+  /* ---------- 4. 构造粒子 Geometry ---------- */
+  const particleGeo = useMemo(() => {
+    const count = SIZE * SIZE;
+    const positions = new Float32Array(count * 3);
+    const uvs = new Float32Array(count * 2);
+    for (let i = 0; i < SIZE; i++) {
+      for (let j = 0; j < SIZE; j++) {
+        const idx = i + j * SIZE;
+        positions[idx * 3] = Math.random();
+        positions[idx * 3 + 1] = Math.random();
+        positions[idx * 3 + 2] = 0;
+        uvs[idx * 2] = i / SIZE;
+        uvs[idx * 2 + 1] = j / SIZE;
+      }
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    geo.setAttribute("uv", new THREE.BufferAttribute(uvs, 2));
+    return geo;
+  }, []);
+
+  const particleMat = useMemo(
+    () =>
+      new THREE.ShaderMaterial({
+        vertexShader: vertParticles,
+        fragmentShader: fragParticles,
+        transparent: true,
+        side: THREE.DoubleSide,
+        uniforms: {
+          uTime: { value: 0 },
+          uPositions: { value: initPositionTex }, // 会在每帧里更新
+          resolution: { value: new THREE.Vector4() },
+        },
+      }),
+    [initPositionTex]
+  );
+
+  /* ---------- 5. 处理鼠标射线，更新 uMouse ---------- */
+  useEffect(() => {
+    const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0); // z=0 平面
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    const onMove = (e) => {
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      raycaster.setFromCamera(mouse, camera);
+      const hit = new THREE.Vector3();
+      raycaster.ray.intersectPlane(plane, hit);
+      simMat.uniforms.uMouse.value.copy(hit);
+    };
+
+    window.addEventListener("pointermove", onMove);
+    return () => window.removeEventListener("pointermove", onMove);
+  }, [camera, simMat]);
+
+  /* ---------- 6. 动画循环：先跑 FBO 再渲染粒子 ---------- */
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+    simMat.uniforms.uTime.value = t;
+    particleMat.uniforms.uTime.value = t;
+
+    // 写入当前 FBO，读出上一次的
+    const writeFBO = swap.current ? fboA : fboB;
+    const readFBO = swap.current ? fboB : fboA;
+
+    simMat.uniforms.uPositions.value = readFBO.texture;
+    particleMat.uniforms.uPositions.value = writeFBO.texture;
+
+    gl.setRenderTarget(writeFBO);
+    gl.render(simScene, simCam);
+    gl.setRenderTarget(null);
+
+    swap.current = !swap.current; // 交换
   });
 
-  return null;
+  /* ---------- 7. 输出粒子 Points ---------- */
+  return <points geometry={particleGeo} material={particleMat} />;
 }

@@ -2,13 +2,13 @@ import { Canvas } from "@react-three/fiber";
 import { ContactShadows, Environment, OrbitControls } from "@react-three/drei";
 import { Experience } from "./components/Experience";
 import { Content } from "./components/Content";
-import "./index.css";
+import styles from "./index.module.css";
 
 function App() {
   return (
     <>
       <Canvas
-        className="webgl"
+        className={styles.webgl}
         camera={{
           fov: 70,
           near: 0.001,

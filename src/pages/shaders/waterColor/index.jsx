@@ -9,17 +9,24 @@ function App() {
       <Canvas
         className={styles.webgl}
         camera={{
-          fov: 70,
-          near: 0.001,
+          fov: 75,
+          near: 0.01,
           far: 1000,
           position: [0, 0, 2],
         }}
         gl={{ antialias: true, alpha: false }}
       >
-        {/* <color attach="background" args={["#000000"]} /> */}
+        {/* <color attach="background" args={["#fefefe"]} /> */}
         <OrbitControls />
         <Experience />
       </Canvas>
+
+      {/* <Canvas
+        orthographic
+        camera={{ left: -1, right: 1, top: 1, bottom: -1, near: 0, far: 1 }}
+      >
+        <Experience />
+      </Canvas> */}
     </>
   );
 }
